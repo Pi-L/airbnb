@@ -8,7 +8,7 @@ import java.text.ParseException;
 public abstract class Sejour implements SejourInterface{
 
     private static final int MIN_NB_NUITS = 1;
-    private static final int MAX_NB_NUITS = 31;
+    private static final int MAX_NB_NUITS = 30;
 
     private MaDate dateArrivee;
     private MaDate dateDepart;
@@ -37,6 +37,7 @@ public abstract class Sejour implements SejourInterface{
 
     @Override
     public abstract boolean verificationNombreDeNuits();
+
 
     @Override
     public boolean verificationNombreDeVoyageurs() {

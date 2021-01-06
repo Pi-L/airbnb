@@ -26,8 +26,8 @@ public class Main {
         Maison maison1 = new Maison(toto, 100, "12 rue des douzaine, 37000 TOURS", 212, 12, 5, false);
         Appartement appartement1 = new Appartement(toto, 10, "13 rue de la douzaine, 37000 TOURS", 12, 3, 0, 2);
 
-        Sejour sejour1 = new SejourCourt(new MaDate("11/01/2021"), 3, maison1, 12);
-        Sejour sejour2 = new SejourLong(new MaDate(14,01,2021), 30, appartement1, 2);
+        Sejour sejour1 = new SejourCourt(new MaDate("11/01/2021"), 5, maison1, 12);
+        Sejour sejour2 = new SejourLong(new MaDate(20,01,2021), 30, appartement1, 2);
 
         List<Sejour> sejourList = new ArrayList<>();
         sejourList.add(sejour1);

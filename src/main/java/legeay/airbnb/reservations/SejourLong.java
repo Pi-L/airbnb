@@ -7,7 +7,7 @@ import java.text.ParseException;
 
 public class SejourLong extends Sejour  implements ConditionsTarifairesInterface {
     private static final int MIN_NB_NUITS = 6;
-    private static final int MAX_NB_NUITS = 31;
+    private static final int MAX_NB_NUITS = 30;
 
     private static final int PROMOTION_EN_POURCENTAGE = 20;
     private int promotion;
@@ -18,7 +18,7 @@ public class SejourLong extends Sejour  implements ConditionsTarifairesInterface
 
     @Override
     protected void miseAJourDuTarif() {
-        promotion = getNbNuits()  * getLogement().getTarifJournalier() * PROMOTION_EN_POURCENTAGE / 100;
+        promotion = getTarif() * PROMOTION_EN_POURCENTAGE / 100;
         setTarif(tarif - promotion);
     }
 
