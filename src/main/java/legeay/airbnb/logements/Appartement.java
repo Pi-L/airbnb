@@ -1,0 +1,38 @@
+package legeay.airbnb.logements;
+
+import legeay.airbnb.outils.ConsoleColors;
+import legeay.airbnb.utilisateurs.Hote;
+
+public class Appartement extends Logement{
+
+    private int numeroEtage;
+    private int superficieBalcon;
+
+    public Appartement(Hote hote, int tarifJournalier, String adresse, int superficie, int nbVoyageursMax, int numeroEtage, int superficieBalcon) {
+        super(hote, tarifJournalier, adresse, superficie, nbVoyageursMax);
+        this.numeroEtage = numeroEtage;
+        this.superficieBalcon = superficieBalcon;
+    }
+
+
+    @Override
+    public void afficher() {
+        getHote().afficher();
+        System.out.println();
+        System.out.println("Le logement est un appartement situé "+ConsoleColors.BLACK_BACKGROUND_BRIGHT+getAdresse()+" au "+etageToString()+ConsoleColors.RESET);
+        System.out.println(ConsoleColors.PURPLE_BOLD+"Superficie : "+ConsoleColors.RESET+getSuperficie()+"m2");
+        System.out.println(ConsoleColors.PURPLE_BOLD+"Balcon : "+ConsoleColors.RESET+(superficieBalcon>0 ? "Oui ("+superficieBalcon+"m2)" : "Non"));
+    }
+
+    @Override
+    public int getSuperficieTotale() {
+        return getSuperficie() + superficieBalcon;
+    }
+
+    private String etageToString() {
+        if(numeroEtage == 1) return "1er étage";
+        else if(numeroEtage > 1 ) return numeroEtage+"ème étage";
+
+        return "rez-de-chaussée";
+    }
+}
