@@ -25,13 +25,13 @@ public class MaDate extends Date {
         super(DATE_FORMAT.parse(""+jour+"/"+mois+"/"+annee).getTime());
     }
 
+    public MaDate(MaDate date, int nbDays) throws ParseException {
+        super(date.getTime() + nbDays * NB_MS_IN_DAY);
+    }
+
     @Override
     public String toString() {
         return DATE_FORMAT.format(this);
-    }
-
-    public MaDate withAddedDays(int nbDays) throws ParseException {
-        return new MaDate(this.getTime() + nbDays * NB_MS_IN_DAY);
     }
 
 }

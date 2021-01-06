@@ -19,7 +19,7 @@ public class Sejour {
         this.nbNuits = nbNuits;
         this.logement = logement;
         this.nbVoyageurs = nbVoyageurs;
-        dateDepart =  dateArrivee.withAddedDays(nbNuits);
+        dateDepart =  new MaDate(dateArrivee, nbNuits);
     }
 
     public void afficher() throws ParseException {
