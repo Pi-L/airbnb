@@ -26,7 +26,7 @@ public class Reservation {
         estValidee = isValid();
         identifiant = ++index;
 
-        prixReservation = this.sejours.stream().reduce(0, (acc, sejour) -> acc + sejour.getPrixSejour(), Integer::sum);
+        prixReservation = this.sejours.stream().reduce(0, (acc, sejour) -> acc + sejour.getTarif(), Integer::sum);
     }
 
     public void afficher() {

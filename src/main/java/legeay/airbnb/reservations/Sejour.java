@@ -5,7 +5,7 @@ import legeay.airbnb.outils.MaDate;
 
 import java.text.ParseException;
 
-public class Sejour implements SejourInterface{
+public abstract class Sejour implements SejourInterface{
 
     private static final int MIN_NB_NUITS = 1;
     private static final int MAX_NB_NUITS = 31;
@@ -13,8 +13,11 @@ public class Sejour implements SejourInterface{
     private MaDate dateArrivee;
     private MaDate dateDepart;
     private int nbNuits;
+
     private Logement logement;
+
     private int nbVoyageurs;
+    protected int tarif;
 
     public Sejour(MaDate dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) throws ParseException {
         this.dateArrivee = dateArrivee;
@@ -22,6 +25,9 @@ public class Sejour implements SejourInterface{
         this.logement = logement;
         this.nbVoyageurs = nbVoyageurs;
         dateDepart =  new MaDate(dateArrivee, nbNuits);
+
+        tarif = getNbNuits()  * getLogement().getTarifJournalier();
+        miseAJourDuTarif();
     }
 
     @Override
@@ -30,9 +36,7 @@ public class Sejour implements SejourInterface{
     }
 
     @Override
-    public boolean verificationNombreDeNuits() {
-        return nbNuits >= MIN_NB_NUITS && nbNuits <= MAX_NB_NUITS;
-    }
+    public abstract boolean verificationNombreDeNuits();
 
     @Override
     public boolean verificationNombreDeVoyageurs() {
@@ -42,7 +46,6 @@ public class Sejour implements SejourInterface{
     public void afficher() throws ParseException {
         logement.afficher();
         System.out.println("Séjour du "+dateArrivee.toString()+" au "+getDateDepart().toString()+" ("+nbNuits+" nuit"+(nbNuits>1?"s":"")+").");
-        System.out.println("Le prix de ce séjour est de "+getPrixSejour()+"€.");
     }
 
     public boolean isValid() {
@@ -57,8 +60,22 @@ public class Sejour implements SejourInterface{
         return dateDepart;
     }
 
-    public int getPrixSejour() {
-        return nbNuits * logement.getTarifJournalier();
+    protected int getNbNuits() {
+        return nbNuits;
     }
+
+    protected Logement getLogement() {
+        return logement;
+    }
+
+    public int getTarif() {
+        return tarif;
+    };
+
+    protected void setTarif(int pTarif) {
+        tarif = pTarif;
+    };
+
+    protected abstract void miseAJourDuTarif();
 
 }
