@@ -5,8 +5,10 @@ import legeay.airbnb.outils.MaDate;
 
 import java.text.ParseException;
 
-public class Sejour {
+public class Sejour implements SejourInterface{
 
+    private static final int MIN_NB_NUITS = 1;
+    private static final int MAX_NB_NUITS = 31;
 
     private MaDate dateArrivee;
     private MaDate dateDepart;
@@ -22,6 +24,21 @@ public class Sejour {
         dateDepart =  new MaDate(dateArrivee, nbNuits);
     }
 
+    @Override
+    public boolean verficationDateArrivee() {
+        return dateArrivee.after(new MaDate());
+    }
+
+    @Override
+    public boolean verificationNombreDeNuits() {
+        return nbNuits >= MIN_NB_NUITS && nbNuits <= MAX_NB_NUITS;
+    }
+
+    @Override
+    public boolean verificationNombreDeVoyageurs() {
+        return nbVoyageurs <= logement.getNbVoyageursMax();
+    }
+
     public void afficher() throws ParseException {
         logement.afficher();
         System.out.println("Séjour du "+dateArrivee.toString()+" au "+getDateDepart().toString()+" ("+nbNuits+" nuit"+(nbNuits>1?"s":"")+").");
@@ -29,7 +46,7 @@ public class Sejour {
     }
 
     public boolean isValid() {
-        return nbVoyageurs <= logement.getNbVoyageursMax();
+        return verficationDateArrivee() && verificationNombreDeNuits() && verificationNombreDeVoyageurs();
     }
 
     public MaDate getDateArrivee() {
