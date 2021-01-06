@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+@Deprecated
 public class Utile {
     private static final String DATE_PATTERN = "dd/MM/yy";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(DATE_PATTERN);

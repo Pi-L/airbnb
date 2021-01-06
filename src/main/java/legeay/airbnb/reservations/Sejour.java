@@ -27,6 +27,7 @@ public abstract class Sejour implements SejourInterface{
         dateDepart =  new MaDate(dateArrivee, nbNuits);
 
         tarif = getNbNuits()  * getLogement().getTarifJournalier();
+        // abstract method implemented in sub-classes
         miseAJourDuTarif();
     }
 
@@ -37,7 +38,6 @@ public abstract class Sejour implements SejourInterface{
 
     @Override
     public abstract boolean verificationNombreDeNuits();
-
 
     @Override
     public boolean verificationNombreDeVoyageurs() {
@@ -77,6 +77,7 @@ public abstract class Sejour implements SejourInterface{
         tarif = pTarif;
     };
 
+    // needed to be here instead of ConditionsTarifairesInterface because it is used in Reservation
     protected abstract void miseAJourDuTarif();
 
 }

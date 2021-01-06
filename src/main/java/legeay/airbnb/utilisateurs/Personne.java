@@ -2,7 +2,7 @@ package legeay.airbnb.utilisateurs;
 
 import legeay.airbnb.outils.ConsoleColors;
 
-public class Personne {
+public abstract class Personne {
 
     private String prenom;
     private String nom;

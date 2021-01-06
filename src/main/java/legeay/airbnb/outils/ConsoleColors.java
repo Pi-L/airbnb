@@ -1,6 +1,12 @@
 package legeay.airbnb.outils;
 
 // from https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
+
+/**
+ * <p>copied from : <a href="https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println">https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println</a></p>
+ * <p>Color Constants characters for Posix terminals</p>
+ * <strong>May not work on Windows Systems</strong>
+ */
 public class ConsoleColors {
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset

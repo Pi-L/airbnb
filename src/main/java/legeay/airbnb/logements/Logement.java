@@ -1,8 +1,10 @@
 package legeay.airbnb.logements;
 
 import legeay.airbnb.utilisateurs.Hote;
-import legeay.airbnb.utilisateurs.Personne;
 
+/**
+ *
+ */
 public abstract class Logement {
 
     private Hote hote;
@@ -11,18 +13,14 @@ public abstract class Logement {
     private int superficie;
     private int nbVoyageursMax;
 
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName()+" -> {\n" +
-                "\thote=" + hote +
-                ", tarifJournalier=" + tarifJournalier +
-                ", adresse='" + adresse + '\'' +
-                ", superficie=" + superficie +
-                ", nbVoyageursMax=" + nbVoyageursMax +
-                "\n}";
-    }
-
+    /**
+     * <p>Logement constructor</p>
+     * @param hote
+     * @param tarifJournalier
+     * @param adresse
+     * @param superficie
+     * @param nbVoyageursMax
+     */
     public Logement(Hote hote, int tarifJournalier, String adresse, int superficie, int nbVoyageursMax) {
         super();
 
@@ -36,10 +34,6 @@ public abstract class Logement {
     public abstract void afficher();
 
     public abstract int getSuperficieTotale();
-
-    public int gettarifJournalier() {
-        return tarifJournalier;
-    }
 
     public int getNbVoyageursMax() {
         return nbVoyageursMax;
@@ -59,5 +53,16 @@ public abstract class Logement {
 
     public int getSuperficie() {
         return superficie;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName()+" -> {\n" +
+                "\thote=" + hote +
+                ", tarifJournalier=" + tarifJournalier +
+                ", adresse='" + adresse + '\'' +
+                ", superficie=" + superficie +
+                ", nbVoyageursMax=" + nbVoyageursMax +
+                "\n}";
     }
 }

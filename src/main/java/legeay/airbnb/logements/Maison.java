@@ -8,6 +8,16 @@ public class Maison extends Logement{
     private int superficieJardin;
     private boolean possedePiscine;
 
+    /**
+     * <p>Maison constructor</p>
+     * @param hote
+     * @param tarifJournalier
+     * @param adresse
+     * @param superficie
+     * @param nbVoyageursMax
+     * @param superficieJardin
+     * @param possedePiscine
+     */
     public Maison(Hote hote, int tarifJournalier, String adresse, int superficie, int nbVoyageursMax, int superficieJardin, boolean possedePiscine) {
         super(hote, tarifJournalier, adresse, superficie, nbVoyageursMax);
         this.superficieJardin = superficieJardin;
