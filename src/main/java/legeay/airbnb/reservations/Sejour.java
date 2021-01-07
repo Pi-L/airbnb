@@ -2,23 +2,23 @@ package legeay.airbnb.reservations;
 
 import legeay.airbnb.logements.Logement;
 import legeay.airbnb.outils.MaDate;
-
 import java.text.ParseException;
+import java.util.Date;
 
 public abstract class Sejour implements SejourInterface{
 
     private static final int MIN_NB_NUITS = 1;
     private static final int MAX_NB_NUITS = 30;
 
-    private MaDate dateArrivee;
-    private MaDate dateDepart;
+    private Date dateArrivee;
+    private Date dateDepart;
     private int nbNuits;
     private Logement logement;
     private int nbVoyageurs;
 
     protected int tarif;
 
-    public Sejour(MaDate dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) throws ParseException {
+    public Sejour(Date dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) throws ParseException {
         this.dateArrivee = dateArrivee;
         this.nbNuits = nbNuits;
         this.logement = logement;
@@ -40,7 +40,7 @@ public abstract class Sejour implements SejourInterface{
 
     @Override
     public boolean verficationDateArrivee() {
-        return dateArrivee.after(new MaDate());
+        return dateArrivee.after(new Date());
     }
 
     @Override
@@ -57,11 +57,11 @@ public abstract class Sejour implements SejourInterface{
         return verficationDateArrivee() && verificationNombreDeNuits() && verificationNombreDeVoyageurs();
     }
 
-    public MaDate getDateArrivee() {
+    public Date getDateArrivee() {
         return dateArrivee;
     }
 
-    public MaDate getDateDepart() {
+    public Date getDateDepart() {
         return dateDepart;
     }
 

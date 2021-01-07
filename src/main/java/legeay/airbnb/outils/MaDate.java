@@ -45,9 +45,9 @@ public class MaDate extends Date {
 
     /**
      *Construct a MaDate Object from 3 integers
-     * @param jour
-     * @param mois
-     * @param annee
+     * @param jour between 1-31
+     * @param mois between 1-12
+     * @param annee last 2 digits
      * @throws ParseException
      */
     public MaDate(int jour, int mois, int annee) throws ParseException {
@@ -61,7 +61,7 @@ public class MaDate extends Date {
      * @param nbDays
      * @throws ParseException
      */
-    public MaDate(MaDate date, int nbDays) throws ParseException {
+    public MaDate(Date date, int nbDays) throws ParseException {
         super(date.getTime() + nbDays * NB_MS_IN_DAY);
     }
 
