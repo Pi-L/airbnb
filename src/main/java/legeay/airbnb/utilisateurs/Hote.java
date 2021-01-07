@@ -1,6 +1,8 @@
 package legeay.airbnb.utilisateurs;
 
-public class Hote extends Personne{
+import legeay.airbnb.AffichableInterface;
+
+public class Hote extends Personne {
 
     private int delaiDeReponse;
 

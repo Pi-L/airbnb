@@ -1,12 +1,13 @@
 package legeay.airbnb.logements;
 
+import legeay.airbnb.AffichableInterface;
 import legeay.airbnb.outils.ConsoleColors;
 import legeay.airbnb.utilisateurs.Hote;
 
 /**
  * <p></p>
  */
-public class Appartement extends Logement{
+public class Appartement extends Logement implements AffichableInterface {
 
     private int numeroEtage;
     private int superficieBalcon;

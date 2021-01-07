@@ -1,5 +1,6 @@
 package legeay.airbnb.reservations;
 
+import legeay.airbnb.AffichableInterface;
 import legeay.airbnb.outils.ConsoleColors;
 import legeay.airbnb.outils.MaDate;
 import legeay.airbnb.utilisateurs.Voyageur;
@@ -7,7 +8,7 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class Reservation {
+public class Reservation implements AffichableInterface {
     // In memory latest reservation identifiant
     private static int index = 0;
 

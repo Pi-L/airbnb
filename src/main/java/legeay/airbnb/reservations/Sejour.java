@@ -1,11 +1,12 @@
 package legeay.airbnb.reservations;
 
+import legeay.airbnb.AffichableInterface;
 import legeay.airbnb.logements.Logement;
 import legeay.airbnb.outils.MaDate;
 import java.text.ParseException;
 import java.util.Date;
 
-public abstract class Sejour implements SejourInterface{
+public abstract class Sejour implements SejourInterface, AffichableInterface {
 
     private static final int MIN_NB_NUITS = 1;
     private static final int MAX_NB_NUITS = 30;
@@ -28,11 +29,6 @@ public abstract class Sejour implements SejourInterface{
         // abstract method implemented in sub-classes
         miseAJourDuTarif();
     }
-
-    @Override
-    public abstract boolean verificationNombreDeNuits();
-
-    // needed to be here instead of ConditionsTarifairesInterface because it is used in Reservation
 
     /**
      * Init tarif
@@ -74,6 +70,7 @@ public abstract class Sejour implements SejourInterface{
         return logement;
     }
 
+    // needed to be here instead of ConditionsTarifairesInterface because it is used in Reservation
     public int getTarif() {
         return tarif;
     };

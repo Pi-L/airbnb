@@ -1,8 +1,9 @@
 package legeay.airbnb.utilisateurs;
 
+import legeay.airbnb.AffichableInterface;
 import legeay.airbnb.outils.ConsoleColors;
 
-public abstract class Personne {
+public abstract class Personne implements AffichableInterface {
 
     private String prenom;
     private String nom;
