@@ -20,7 +20,10 @@ public class SejourLong extends Sejour  implements ConditionsTarifairesInterface
 
     @Override
     protected void miseAJourDuTarif() {
+        setTarif(getNbNuits() * getLogement().getTarifJournalier());
+
         promotion = getTarif() * PROMOTION_EN_POURCENTAGE / 100;
+
         setTarif(getTarif() - promotion);
     }
 

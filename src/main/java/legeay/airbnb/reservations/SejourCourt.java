@@ -22,7 +22,7 @@ public class SejourCourt extends Sejour implements ConditionsTarifairesInterface
 
     @Override
     protected void miseAJourDuTarif() {
-        return;
+        setTarif(getNbNuits() * getLogement().getTarifJournalier());
     }
 
     @Override
