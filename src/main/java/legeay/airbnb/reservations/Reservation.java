@@ -24,9 +24,8 @@ public class Reservation implements AffichableInterface {
      *
      * @param sejours
      * @param voyageur
-     * @throws ParseException
      */
-    public Reservation(List<Sejour> sejours, Voyageur voyageur) throws ParseException {
+    public Reservation(List<Sejour> sejours, Voyageur voyageur) {
         this.sejours = sejours;
         this.voyageur = voyageur;
         dateDeReservation = new MaDate();
@@ -51,13 +50,7 @@ public class Reservation implements AffichableInterface {
             voyageur.afficher();
             System.out.print(" a fait une réservation chez ");
 
-            // try catch needed but useless ... why ?
-            try {
-                sejours.get(i).afficher();
-            } catch (ParseException e) {
-                System.out.println("ERROR => Le sejour ne peut etre affiché car la date fournie est invalide");
-                System.out.println(e.getMessage());
-            }
+            sejours.get(i).afficher();
 
             System.out.println();
         }
@@ -80,16 +73,14 @@ public class Reservation implements AffichableInterface {
      * <li>Checking that all individual sejours are valid</li>
      * </ul>
      * @return
-     * @throws ParseException
      */
-    private boolean isValid() throws ParseException {
+    private boolean isValid()  {
         return !isDatesOverlap() && sejours.stream().allMatch(sejour -> sejour.isValid());
     }
 
     /**
      * <p>Compare all sejours date ranges with each other to determine if there is overlapping</p>
      * @return
-     * @throws ParseException
      */
     private boolean isDatesOverlap() {
         long timestampArrivee1;

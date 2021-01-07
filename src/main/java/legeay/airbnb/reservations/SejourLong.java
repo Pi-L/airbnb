@@ -13,7 +13,7 @@ public class SejourLong extends Sejour  implements ConditionsTarifairesInterface
 
     private int promotion;
 
-    public SejourLong(Date dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) throws ParseException {
+    public SejourLong(Date dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) {
         // miseAJourDuTarif() implemented here but called in super()
         super(dateArrivee, nbNuits, logement, nbVoyageurs);
     }
@@ -38,7 +38,7 @@ public class SejourLong extends Sejour  implements ConditionsTarifairesInterface
     }
 
     @Override
-    public void afficher() throws ParseException  {
+    public void afficher()  {
         super.afficher();
         System.out.println("Le prix de ce séjour est de "+getTarif()+"€ ("+promotion+"€ de promotion).");
     }

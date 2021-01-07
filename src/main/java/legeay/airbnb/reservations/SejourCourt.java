@@ -11,7 +11,7 @@ public class SejourCourt extends Sejour implements ConditionsTarifairesInterface
     private static final int MIN_NB_NUITS = 1;
     private static final int MAX_NB_NUITS = 5;
 
-    public SejourCourt(Date dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) throws ParseException {
+    public SejourCourt(Date dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) {
         super(dateArrivee, nbNuits, logement, nbVoyageurs);
     }
 
@@ -31,7 +31,7 @@ public class SejourCourt extends Sejour implements ConditionsTarifairesInterface
     }
 
     @Override
-    public void afficher() throws ParseException  {
+    public void afficher()  {
         super.afficher();
         System.out.println("Le prix de ce séjour est de "+getTarif()+"€.");
     }

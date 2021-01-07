@@ -19,7 +19,7 @@ public abstract class Sejour implements SejourInterface, AffichableInterface {
 
     private int tarif;
 
-    public Sejour(Date dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) throws ParseException {
+    public Sejour(Date dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) {
         this.dateArrivee = dateArrivee;
         this.nbNuits = nbNuits;
         this.logement = logement;
@@ -45,7 +45,7 @@ public abstract class Sejour implements SejourInterface, AffichableInterface {
         return nbVoyageurs <= logement.getNbVoyageursMax();
     }
 
-    public void afficher() throws ParseException {
+    public void afficher() {
         logement.afficher();
         System.out.println("Séjour du "+dateArrivee.toString()+" au "+getDateDepart().toString()+" ("+nbNuits+" nuit"+(nbNuits>1?"s":"")+").");
     }

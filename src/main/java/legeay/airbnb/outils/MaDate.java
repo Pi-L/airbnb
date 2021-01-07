@@ -61,9 +61,8 @@ public class MaDate extends Date {
      *
      * @param date
      * @param nbDays
-     * @throws ParseException
      */
-    public MaDate(Date date, int nbDays) throws ParseException {
+    public MaDate(Date date, int nbDays) {
         super(date.getTime() + nbDays * NB_MS_IN_DAY);
     }
 

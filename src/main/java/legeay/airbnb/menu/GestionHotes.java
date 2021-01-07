@@ -24,18 +24,18 @@ public class GestionHotes {
                 catch (Exception e) {
                     Menu.scanner.nextLine(); // in order to "consume" the "\n" which the nextInt() does not
                     System.out.println("Ajout d'un nouvel hote impossible : saisie erronée");
+                } finally {
+                    listerHotes();
                 }
                 break;
             case 2:
                 supprimerHote();
+                listerHotes();
                 break;
             case 3:
                 Menu.listerMenu();
                 break;
-
         }
-
-        listerHotes();
     }
 
     static void ajouterHote() throws Exception {
@@ -53,12 +53,16 @@ public class GestionHotes {
 
         Hote hote = new Hote(prenom, nom, age, delais);
 
-        // hote.afficher();
         Menu.hoteList.add(hote);
     }
 
     static void supprimerHote() {
-
+        if(Menu.hoteList.size() == 0) System.out.println("Il n'y a pas d'hote à supprimer !");
+        else {
+            System.out.println("Choisir un hote à supprimer :");
+            int indexPlusOne = Menu.getInteger(1, Menu.hoteList.size());
+            Menu.hoteList.remove(indexPlusOne - 1);
+        }
     }
 
 }
