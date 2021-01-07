@@ -3,6 +3,7 @@ package legeay.airbnb.reservations;
 import legeay.airbnb.logements.Logement;
 import legeay.airbnb.outils.MaDate;
 import java.text.ParseException;
+import java.util.Date;
 
 public class SejourLong extends Sejour  implements ConditionsTarifairesInterface {
 
@@ -12,7 +13,7 @@ public class SejourLong extends Sejour  implements ConditionsTarifairesInterface
 
     private int promotion;
 
-    public SejourLong(MaDate dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) throws ParseException {
+    public SejourLong(Date dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) throws ParseException {
         // miseAJourDuTarif() implemented here but called in super()
         super(dateArrivee, nbNuits, logement, nbVoyageurs);
     }

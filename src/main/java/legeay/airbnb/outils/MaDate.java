@@ -51,6 +51,8 @@ public class MaDate extends Date {
      * @throws ParseException
      */
     public MaDate(int jour, int mois, int annee) throws ParseException {
+        // perilous
+        // super(annee - 1900, mois - 1, jour)
         super(DATE_FORMAT.parse(""+jour+"/"+mois+"/"+annee).getTime());
     }
 
