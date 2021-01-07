@@ -33,7 +33,7 @@ public class Main {
 //        sejourList.add(sejour1);
 //        sejourList.add(sejour2);
 
-        JeuDeTest test1 = new JeuDeTest(3);
+        JeuDeTest test1 = new JeuDeTest(1);
         test1.getReservation().afficher();
         // Reservation resa1 = new Reservation(sejourList, ken);
         // resa1.afficher();

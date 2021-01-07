@@ -21,7 +21,7 @@ public class SejourLong extends Sejour  implements ConditionsTarifairesInterface
     @Override
     protected void miseAJourDuTarif() {
         promotion = getTarif() * PROMOTION_EN_POURCENTAGE / 100;
-        setTarif(tarif - promotion);
+        setTarif(getTarif() - promotion);
     }
 
     @Override

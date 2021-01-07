@@ -16,7 +16,7 @@ public abstract class Sejour implements SejourInterface{
     private Logement logement;
     private int nbVoyageurs;
 
-    protected int tarif;
+    private int tarif;
 
     public Sejour(Date dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) throws ParseException {
         this.dateArrivee = dateArrivee;
@@ -35,8 +35,6 @@ public abstract class Sejour implements SejourInterface{
 
     // needed to be here instead of ConditionsTarifairesInterface because it is used in Reservation
     protected abstract void miseAJourDuTarif();
-
-
 
     @Override
     public boolean verficationDateArrivee() {

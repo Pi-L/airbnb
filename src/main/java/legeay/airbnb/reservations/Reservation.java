@@ -11,7 +11,7 @@ public class Reservation {
     // In memory latest reservation identifiant
     private static int index = 0;
 
-    private final int identifiant;
+    private int identifiant;
     private List<Sejour> sejours;
     private Voyageur voyageur;
     private boolean estValidee;
