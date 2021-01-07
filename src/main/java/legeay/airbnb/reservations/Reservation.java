@@ -38,7 +38,7 @@ public class Reservation {
     }
 
     /**
-     * <p>Display all sejours, if the resarvation is valid, and the total cost of the reservation</p>
+     * <p>Display all sejours, the reservation validity, and the total cost of the reservation</p>
      */
     public void afficher() {
         System.out.println();
@@ -106,10 +106,10 @@ public class Reservation {
                 timestampDepart2 = sejours.get(j).getDateDepart().getTime();
 
                 // not used, but help understanding how it work
-                // not(is not overlapping) ?
+                // test not(is not overlapping)
                // !(timestampArrivee1 >= timestampDepart2 || timestampDepart1 <= timestampArrivee2)
 
-                // (is overlapping) ?
+                // test (is overlapping)
                 // a piece of paper is needed to explain it
                 if(timestampArrivee2 < timestampDepart1 && timestampArrivee1 < timestampDepart2) return true;
             }

@@ -35,6 +35,7 @@ public abstract class Logement {
 
     public abstract int getSuperficieTotale();
 
+
     public int getNbVoyageursMax() {
         return nbVoyageursMax;
     }
@@ -54,6 +55,7 @@ public abstract class Logement {
     public int getSuperficie() {
         return superficie;
     }
+
 
     @Override
     public String toString() {

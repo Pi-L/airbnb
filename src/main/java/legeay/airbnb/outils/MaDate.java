@@ -20,7 +20,7 @@ public class MaDate extends Date {
     private static final long NB_MS_IN_DAY = 86400000L;
 
     /**
-     * Construct a MaDate Object with current date
+     * Construct a MaDate Object with current timestamp
      */
     public MaDate() {
         super();

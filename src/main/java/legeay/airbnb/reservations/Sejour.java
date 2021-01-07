@@ -13,10 +13,9 @@ public abstract class Sejour implements SejourInterface{
     private MaDate dateArrivee;
     private MaDate dateDepart;
     private int nbNuits;
-
     private Logement logement;
-
     private int nbVoyageurs;
+
     protected int tarif;
 
     public Sejour(MaDate dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) throws ParseException {
@@ -32,12 +31,17 @@ public abstract class Sejour implements SejourInterface{
     }
 
     @Override
+    public abstract boolean verificationNombreDeNuits();
+
+    // needed to be here instead of ConditionsTarifairesInterface because it is used in Reservation
+    protected abstract void miseAJourDuTarif();
+
+
+
+    @Override
     public boolean verficationDateArrivee() {
         return dateArrivee.after(new MaDate());
     }
-
-    @Override
-    public abstract boolean verificationNombreDeNuits();
 
     @Override
     public boolean verificationNombreDeVoyageurs() {
@@ -77,7 +81,6 @@ public abstract class Sejour implements SejourInterface{
         tarif = pTarif;
     };
 
-    // needed to be here instead of ConditionsTarifairesInterface because it is used in Reservation
-    protected abstract void miseAJourDuTarif();
+
 
 }
