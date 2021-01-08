@@ -1,6 +1,9 @@
 package legeay.airbnb.logements;
 
+import legeay.airbnb.reservations.Sejour;
 import legeay.airbnb.utilisateurs.Hote;
+
+import java.util.List;
 
 /**
  *
@@ -12,6 +15,7 @@ public abstract class Logement {
     private String adresse;
     private int superficie;
     private int nbVoyageursMax;
+    private List<Sejour> sejourList;
 
     /**
      * <p>Logement constructor</p>

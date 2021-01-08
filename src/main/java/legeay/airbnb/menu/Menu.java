@@ -9,6 +9,9 @@ public class Menu {
 
     static Scanner scanner;
     static List<AffichableInterface> hoteList;
+    static List<AffichableInterface> logementList;
+    static List<AffichableInterface> voyageurList;
+    static List<AffichableInterface> reservationList;
 
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
@@ -35,12 +38,13 @@ public class Menu {
             case 1:
                 GestionHotes.listerHotes();
                 break;
-//            case 2:
-//                break;
-//            case 3:
-//                break;
-//            case 4:
-//                break;
+            case 2:
+                break;
+            case 3:
+                GestionVoyageurs.listerVoyageurs();
+                break;
+            case 4:
+                break;
             case 5:
                 // not needed here but good to know
                 // 0 means normal exit
@@ -83,7 +87,7 @@ public class Menu {
         int value = getInteger();
 
         while (value < min || value > max) {
-            System.out.println("La valeur entrée n'est pas dans l'interval demandé");
+            System.out.println("La valeur entrée n'est pas dans l'interval demandé : ["+min+" - "+max+"]");
             System.out.print("veuillez ressaisir : ");
             value = getInteger();
         }

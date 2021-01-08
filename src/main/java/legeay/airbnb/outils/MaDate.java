@@ -37,7 +37,7 @@ public class MaDate extends Date {
     /**
      * Construct a MaDate Object from a string
      * @param date as to be formatted with numerics values of <strong>days/month/year</strong>
-     * @throws ParseException
+     * @throws ParseException if DATE_FORMAT.parse() can't recognize the pattern
      */
     public MaDate(String date) throws ParseException {
         super(DATE_FORMAT.parse(date).getTime());
@@ -48,7 +48,7 @@ public class MaDate extends Date {
      * @param jour between 1-31
      * @param mois between 1-12
      * @param annee last 2 digits
-     * @throws ParseException
+     * @throws ParseException if DATE_FORMAT.parse() can't recognize the pattern
      */
     public MaDate(int jour, int mois, int annee) throws ParseException {
         // perilous

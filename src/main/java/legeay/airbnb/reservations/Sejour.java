@@ -3,7 +3,6 @@ package legeay.airbnb.reservations;
 import legeay.airbnb.AffichableInterface;
 import legeay.airbnb.logements.Logement;
 import legeay.airbnb.outils.MaDate;
-import java.text.ParseException;
 import java.util.Date;
 
 public abstract class Sejour implements SejourInterface, AffichableInterface {
@@ -16,6 +15,7 @@ public abstract class Sejour implements SejourInterface, AffichableInterface {
     private int nbNuits;
     private Logement logement;
     private int nbVoyageurs;
+    private Reservation reservation;
 
     private int tarif;
 

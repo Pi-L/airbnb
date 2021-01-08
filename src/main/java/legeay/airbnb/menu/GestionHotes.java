@@ -23,7 +23,7 @@ public class GestionHotes {
                 }
                 catch (Exception e) {
                     Menu.scanner.nextLine(); // in order to "consume" the "\n" which the nextInt() does not
-                    System.out.println("Ajout d'un nouvel hote impossible : saisie erronée");
+                    System.out.println("Ajout d'un nouvel hote impossible, saisie erronée : "+e.getMessage());
                 } finally {
                     listerHotes();
                 }
@@ -48,8 +48,13 @@ public class GestionHotes {
         String prenom = Menu.scanner.nextLine();
         System.out.println("Age :");
         int age = Menu.scanner.nextInt();
+
+        if (age < 0 || age > 150) throw new Exception("L'age entré n'est pas realiste");
+
         System.out.println("Delais reponse :");
         int delais = Menu.scanner.nextInt();
+
+        if (delais < 0 || delais > 500) throw new Exception("Le delais entré n'est pas realiste");
 
         Hote hote = new Hote(prenom, nom, age, delais);
 

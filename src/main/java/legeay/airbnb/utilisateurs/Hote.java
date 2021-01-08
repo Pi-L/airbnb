@@ -1,10 +1,12 @@
 package legeay.airbnb.utilisateurs;
 
-import legeay.airbnb.AffichableInterface;
+import legeay.airbnb.logements.Logement;
+import java.util.List;
 
 public class Hote extends Personne {
 
     private int delaiDeReponse;
+    private List<Logement> logementList;
 
     public Hote(String prenom, String nom, int age, int delaiDeReponse) {
         super(prenom, nom, age);
