@@ -1,16 +1,17 @@
 package legeay.airbnb.menu;
 
+import legeay.airbnb.outils.Utile;
 import legeay.airbnb.utilisateurs.Voyageur;
 
 public class GestionVoyageurs {
     static void listerVoyageurs() {
         System.out.println();
-        System.out.println("-------------------------------------");
-        System.out.println("Liste des voyageurs ");
-        System.out.println("---------------");
+        Utile.info("-------------------------------------");
+        Utile.info("Liste des voyageurs ");
+        Utile.info("---------------");
         Menu.afficherList(Menu.voyageurList);
-        System.out.println("-------------------------------------");
-        System.out.println("Saisir une option : ");
+        Utile.info("-------------------------------------");
+        Utile.info("Saisir une option : ");
         System.out.println("1 : Ajouter un voyageur");
         System.out.println("2 : Supprimer un voyageur");
         System.out.println("3 : Retour");
@@ -21,7 +22,10 @@ public class GestionVoyageurs {
                 listerVoyageurs();
                 break;
             case 2:
-                supprimerVoyageur();
+                if(Menu.voyageurList.size() == 0) Utile.alert("Il n'y a pas d'Voyageur à supprimer !");
+                else {
+                    supprimerVoyageur();
+                }
                 listerVoyageurs();
                 break;
             case 3:
@@ -31,8 +35,8 @@ public class GestionVoyageurs {
     }
 
     static void ajouterVoyageur() {
-        System.out.println("-------------------------------------");
-        System.out.println("Ajouter un voyageur");
+        Utile.info("-------------------------------------");
+        Utile.info("Ajouter un voyageur");
         System.out.println("Nom :");
         String nom = Menu.getInputString();
 
@@ -48,13 +52,11 @@ public class GestionVoyageurs {
     }
 
     static void supprimerVoyageur() {
-        System.out.println("-------------------------------------");
-        System.out.println("Supprimer un voyageur");
-        if(Menu.voyageurList.size() == 0) System.out.println("Il n'y a pas d'Voyageur à supprimer !");
-        else {
-            System.out.println("Choisir un Voyageur à supprimer :");
-            int indexPlusOne = Menu.getInputInteger(1, Menu.voyageurList.size());
-            Menu.voyageurList.remove(indexPlusOne - 1);
-        }
+        Utile.info("-------------------------------------");
+        Utile.info("Supprimer un voyageur");
+        System.out.println("Choisir un Voyageur à supprimer :");
+
+        int indexPlusOne = Menu.getInputInteger(1, Menu.voyageurList.size());
+        Menu.voyageurList.remove(indexPlusOne - 1);
     }
 }

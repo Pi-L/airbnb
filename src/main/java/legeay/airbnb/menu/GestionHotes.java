@@ -1,17 +1,18 @@
 package legeay.airbnb.menu;
 
+import legeay.airbnb.outils.Utile;
 import legeay.airbnb.utilisateurs.Hote;
 
 public class GestionHotes {
 
     static void listerHotes() {
         System.out.println();
-        System.out.println("-------------------------------------");
-        System.out.println("Liste des hôtes ");
-        System.out.println("---------------");
+        Utile.info("-------------------------------------");
+        Utile.info("Liste des hôtes ");
+        Utile.info("---------------");
         Menu.afficherList(Menu.hoteList);
-        System.out.println("-------------------------------------");
-        System.out.println("Saisir une option : ");
+        Utile.info("-------------------------------------");
+        Utile.info("Saisir une option : ");
         System.out.println("1 : Ajouter un hôte");
         System.out.println("2 : Supprimer un hôte");
         System.out.println("3 : Retour");
@@ -23,7 +24,7 @@ public class GestionHotes {
                 }
                 catch (Exception e) {
                     Menu.scanner.nextLine(); // in order to "consume" the "\n" which the nextInt() does not
-                    System.out.println("Ajout d'un nouvel hote impossible, saisie erronée : "+e.getMessage());
+                    Utile.alert("Ajout d'un nouvel hote impossible, saisie erronée : "+e.getMessage());
                 } finally {
                     listerHotes();
                 }
@@ -32,7 +33,7 @@ public class GestionHotes {
                 try {
                     supprimerHote();
                 } catch (IndexOutOfBoundsException e) {
-                    System.out.println("Echec de la suppression - l'hôte choisi n'existe pas : "+e.getMessage());
+                    Utile.alert("Echec de la suppression - l'hôte choisi n'existe pas : "+e.getMessage());
                 } finally {
                     listerHotes();
                 }
@@ -72,13 +73,13 @@ public class GestionHotes {
      * @throws IndexOutOfBoundsException doesn't really throw anything but let say it does =)
      */
     static void supprimerHote() throws IndexOutOfBoundsException {
-        System.out.println("-------------------------------------");
-        System.out.println("Supprimer un Hôte");
+        Utile.info("-------------------------------------");
+        Utile.info("Supprimer un Hôte");
 
         // Uncomment to test the IndexOutOfBoundsException
         // Menu.hoteList.remove(555);
 
-        if(Menu.hoteList.size() == 0) System.out.println("Il n'y a pas d'hote à supprimer !");
+        if(Menu.hoteList.size() == 0) Utile.alert("Il n'y a pas d'hote à supprimer !");
         else {
             System.out.println("Choisir un hote à supprimer :");
             int indexPlusOne = Menu.getInputInteger(1, Menu.hoteList.size());
