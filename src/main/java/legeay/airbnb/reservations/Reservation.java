@@ -12,7 +12,7 @@ public class Reservation implements AffichableInterface {
     // In memory latest reservation identifiant
     private static int index = 0;
 
-    private int identifiant;
+    private int id;
     private List<Sejour> sejours;
     private Voyageur voyageur;
     private boolean estValidee;
@@ -31,7 +31,7 @@ public class Reservation implements AffichableInterface {
         dateDeReservation = new MaDate();
         estValidee = isValid();
 
-        identifiant = ++index;
+        id = ++index;
 
         // prixReservation is affected with the sum of all sejour's prices
         prixReservation = this.sejours.stream().reduce(0, (acc, sejour) -> acc + sejour.getTarif(), Integer::sum);
@@ -62,7 +62,7 @@ public class Reservation implements AffichableInterface {
 
         System.out.println("#######################################################");
         System.out.println("  "+(estValidee?"#":"")+"###########  La reservation est "+message+"  #########"+(estValidee?"##":""));
-        if(estValidee) System.out.println("  ####  Montant reservation n°"+identifiant+" : "+prixReservation+" euros  ####");
+        if(estValidee) System.out.println("  ####  Montant reservation n°"+id+" : "+prixReservation+" euros  ####");
         System.out.println("#######################################################");
         System.out.print(ConsoleColors.RESET);
     }

@@ -10,7 +10,7 @@ public class GestionHotes {
         Utile.info("-------------------------------------");
         Utile.info("Liste des hôtes ");
         Utile.info("---------------");
-        Menu.afficherList(Menu.hoteList);
+        Menu.afficherPersonneList(Menu.hoteList);
         Utile.info("-------------------------------------");
         Utile.info("Saisir une option : ");
         System.out.println("1 : Ajouter un hôte");
@@ -23,7 +23,7 @@ public class GestionHotes {
                     ajouterHote();
                 }
                 catch (Exception e) {
-                    Menu.scanner.nextLine(); // in order to "consume" the "\n" which the nextInt() does not
+                    Menu.scanner.nextLine(); // in order to "consume" the line
                     Utile.alert("Ajout d'un nouvel hote impossible, saisie erronée : "+e.getMessage());
                 } finally {
                     listerHotes();

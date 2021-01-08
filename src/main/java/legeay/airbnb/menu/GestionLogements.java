@@ -1,16 +1,27 @@
 package legeay.airbnb.menu;
 
+import legeay.airbnb.logements.Appartement;
 import legeay.airbnb.logements.Logement;
+import legeay.airbnb.logements.Maison;
 import legeay.airbnb.outils.Utile;
+import legeay.airbnb.utilisateurs.Hote;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class GestionLogements {
 
+    static List<Logement> logementList;
+
     static void listerLogements() {
+        initLogement();
+
         System.out.println();
         Utile.info("-------------------------------------");
         Utile.info("Liste des logements ");
         Utile.info("---------------");
-        Menu.afficherList(Menu.logementList);
+        afficherLogementList();
         Utile.info("-------------------------------------");
         Utile.info("Saisir une option : ");
         System.out.println("1 : Ajouter un logement");
@@ -30,7 +41,7 @@ public class GestionLogements {
                 listerLogements();
                 break;
             case 2:
-                if(Menu.logementList.size() == 0) Utile.alert("Il n'y a pas de logement à supprimer !");
+                if(logementList.size() == 0) Utile.alert("Il n'y a pas de logement à supprimer !");
                 else supprimerLogement();
 
                 listerLogements();
@@ -38,6 +49,24 @@ public class GestionLogements {
             case 3:
                 Menu.listerMenu();
                 break;
+        }
+    }
+
+    static void initLogement() {
+        logementList = new ArrayList<>();
+        logementList = Menu.hoteList.stream()
+                .flatMap(hote -> hote.getLogementList().stream())
+                .collect(Collectors.toList());
+    }
+
+    static void afficherLogementList() {
+        if(logementList.size() == 0) Utile.warn("Il n'y a pas de logement à afficher");
+        else {
+            for (int i = 0; i < logementList.size(); i++) {
+                if (i>0) System.out.println();
+                System.out.print((i + 1) + ". ");
+                logementList.get(i).afficher();
+            }
         }
     }
 
@@ -57,52 +86,55 @@ public class GestionLogements {
         }
 
         Utile.info("Liste des hôtes ");
-        Menu.afficherList(Menu.hoteList);
+        Menu.afficherPersonneList(Menu.hoteList);
 
         int indexHote = -1;
+        Hote hote;
+
+        System.out.println("Numéro de l'hôte : ");
         indexHote = Menu.getInputInteger(1, Menu.hoteList.size()) - 1;
+        hote = Menu.hoteList.get(indexHote);
 
-
-
+        System.out.println("Tarif journalier :");
+        int tarifJournalier = Menu.getInputInteger(1,10000);
+        System.out.println("Adresse :");
+        String adresse = Menu.getInputString();
+        System.out.println("Superficie : ");
+        int superficie = Menu.getInputInteger(1, 10000);
+        System.out.println("Nombre de voyageur max : ");
+        int nbVoyageurMax = Menu.getInputInteger(1, 20);
 
         switch (choixLogement) {
             case 1:
+                System.out.println("Superficie Jardin : ");
+                int superficieJardin = Menu.getInputInteger(0, 10000);
+                System.out.println("Piscine (0: non, 1: oui) :");
+                boolean hasJardin = Menu.getInputInteger(0, 1) == 1;
 
+                new Maison(hote, tarifJournalier, adresse, superficie, nbVoyageurMax, superficieJardin, hasJardin);
                 break;
             case 2:
+                System.out.println("Numero étage  :");
+                int numeroEtage = Menu.getInputInteger(0, 200);
+                System.out.println("Superficie balcon : ");
+                int superficieBalcon = Menu.getInputInteger(0, 100);
 
+                new Appartement(hote, tarifJournalier, adresse, superficie, nbVoyageurMax, numeroEtage, superficieBalcon);
                 break;
         }
-
-        System.out.println("Nom :");
-        String nom = Menu.getInputString();
-
-        System.out.println("Prenom :");
-        String prenom = Menu.getInputString();
-
-        System.out.println("Age :");
-        int age = Menu.getInputInteger(0, 150);
-
-//        Logement Logement = new Logement(prenom, nom, age);
-//
-//        Menu.logementList.add(Logement);
     }
 
-    static void ajouterMaison() {
-
-    }
-
-    static void ajouterAppartement() {
-
-    }
 
     static void supprimerLogement() {
         Utile.info("-------------------------------------");
         Utile.info("Supprimer un logement");
         System.out.println("Choisir un Logement à supprimer :");
 
-        int indexPlusOne = Menu.getInputInteger(1, Menu.logementList.size());
-        Menu.logementList.remove(indexPlusOne - 1);
+        int index = Menu.getInputInteger(1, logementList.size()) - 1;
 
+        Logement logementToRemove = logementList.get(index);
+        Hote ownerLogement = logementToRemove.getHote();
+
+        ownerLogement.getLogementList().remove(logementToRemove);
     }
 }

@@ -1,7 +1,12 @@
 package legeay.airbnb.menu;
 
 import legeay.airbnb.AffichableInterface;
+import legeay.airbnb.logements.Appartement;
+import legeay.airbnb.logements.Maison;
 import legeay.airbnb.outils.Utile;
+import legeay.airbnb.utilisateurs.Hote;
+import legeay.airbnb.utilisateurs.Personne;
+import legeay.airbnb.utilisateurs.Voyageur;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,18 +15,13 @@ import java.util.Scanner;
 public class Menu {
 
     static Scanner scanner;
-    static List<AffichableInterface> hoteList;
-    static List<AffichableInterface> logementList;
-    static List<AffichableInterface> voyageurList;
-    static List<AffichableInterface> reservationList;
+    static List<Hote> hoteList;
+    static List<Voyageur> voyageurList;
 
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
 
-        hoteList = new ArrayList<>();
-        logementList = new ArrayList<>();
-        voyageurList = new ArrayList<>();
-        reservationList = new ArrayList<>();
+        init();
 
         Utile.info("-----------------------------");
         Utile.info("--- Bienvenue chez AirBnB ---");
@@ -60,7 +60,20 @@ public class Menu {
         }
     }
 
-    static void afficherList(List<AffichableInterface> pList) {
+    static void init() {
+        hoteList = new ArrayList<>();
+        voyageurList = new ArrayList<>();
+
+        hoteList.add(new Hote("titi", "rodriguez", 54, 234));
+        hoteList.add(new Hote("Son", "Goku", 54, 1));
+
+        new Maison(hoteList.get(0), 50, "32 rue de la raclette", 120, 12, 0, false);
+        new Appartement(hoteList.get(0), 31, "33 rue de la fondu", 42, 5, 1, 4);
+
+
+    }
+
+    static void afficherPersonneList(List<? extends Personne> pList) {
         if(pList.size() == 0) Utile.warn("Il n'y a pas d'éléments à afficher");
         else {
             // System.out.println("Liste des "+pList.get(0).getClass().getSimpleName()+"s :");
@@ -82,7 +95,8 @@ public class Menu {
                 isValid = true;
 
             } catch (Exception exception) {
-                Utile.alert("Votre saisie << " + scanner.nextLine() + " >> n'est pas un entier. Veuillez (vous) ressaisir : ");
+                Utile.alert(" Votre saisie << " + scanner.nextLine() + " >> n'est pas un entier. ");
+                System.out.println("Veuillez (vous) ressaisir : ");
                 isValid = false;
             }
         }
@@ -95,8 +109,8 @@ public class Menu {
         int value = getInputInteger();
 
         while (value < min || value > max) {
-            Utile.alert("La valeur entrée n'est pas dans l'interval demandé : ["+min+" - "+max+"]");
-            System.out.print("veuillez ressaisir : ");
+            Utile.alert(" La valeur entrée n'est pas dans l'interval demandé : ["+min+" - "+max+"] ");
+            System.out.println("Veuillez (vous) ressaisir : ");
             value = getInputInteger();
         }
         return value;

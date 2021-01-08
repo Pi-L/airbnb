@@ -9,6 +9,8 @@ import java.util.List;
  *
  */
 public abstract class Logement {
+    private static int index = 0;
+    private int id;
 
     private Hote hote;
     private int tarifJournalier;
@@ -33,6 +35,10 @@ public abstract class Logement {
         this.adresse = adresse;
         this.superficie = superficie;
         this.nbVoyageursMax = nbVoyageursMax;
+
+        this.hote.getLogementList().add(this);
+
+        id = ++index;
     }
 
     public abstract void afficher();

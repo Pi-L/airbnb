@@ -1,6 +1,8 @@
 package legeay.airbnb.utilisateurs;
 
 import legeay.airbnb.logements.Logement;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hote extends Personne {
@@ -10,7 +12,7 @@ public class Hote extends Personne {
 
     public Hote(String prenom, String nom, int age, int delaiDeReponse) {
         super(prenom, nom, age);
-
+        logementList = new ArrayList<>();
         this.delaiDeReponse = delaiDeReponse;
     }
 
@@ -21,5 +23,9 @@ public class Hote extends Personne {
         super.afficher();
         System.out.println(messageStart+messageEnd);
 
+    }
+
+    public List<Logement> getLogementList() {
+        return logementList;
     }
 }

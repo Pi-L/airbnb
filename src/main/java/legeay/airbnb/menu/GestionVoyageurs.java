@@ -9,7 +9,7 @@ public class GestionVoyageurs {
         Utile.info("-------------------------------------");
         Utile.info("Liste des voyageurs ");
         Utile.info("---------------");
-        Menu.afficherList(Menu.voyageurList);
+        Menu.afficherPersonneList(Menu.voyageurList);
         Utile.info("-------------------------------------");
         Utile.info("Saisir une option : ");
         System.out.println("1 : Ajouter un voyageur");
