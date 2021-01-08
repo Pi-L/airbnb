@@ -15,7 +15,11 @@ public class Menu {
 
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
+
         hoteList = new ArrayList<>();
+        logementList = new ArrayList<>();
+        voyageurList = new ArrayList<>();
+        reservationList = new ArrayList<>();
 
         System.out.println("-----------------------------");
         System.out.println("--- Bienvenue chez AirBnB ---");
@@ -34,7 +38,7 @@ public class Menu {
         System.out.println("4 : Liste des réservations");
         System.out.println("5 : Fermer le programme");
         System.out.println("-----------------------------");
-        switch (Menu.getInteger(1,5)) {
+        switch (Menu.getInputInteger(1,5)) {
             case 1:
                 GestionHotes.listerHotes();
                 break;
@@ -56,6 +60,7 @@ public class Menu {
     static void afficherList(List<AffichableInterface> pList) {
         if(pList.size() == 0) System.out.println("Il n'y a pas d'éléments à afficher");
         else {
+            // System.out.println("Liste des "+pList.get(0).getClass().getSimpleName()+"s :");
             for (int i = 0; i < pList.size(); i++) {
                 System.out.print((i+1)+". ");
                 pList.get(i).afficher();
@@ -63,7 +68,7 @@ public class Menu {
         }
     }
 
-    static int getInteger() {
+    static int getInputInteger() {
         boolean isValid;
         int value = 0;
 
@@ -83,18 +88,18 @@ public class Menu {
         return value;
     }
 
-    static int getInteger(int min, int max) {
-        int value = getInteger();
+    static int getInputInteger(int min, int max) {
+        int value = getInputInteger();
 
         while (value < min || value > max) {
             System.out.println("La valeur entrée n'est pas dans l'interval demandé : ["+min+" - "+max+"]");
             System.out.print("veuillez ressaisir : ");
-            value = getInteger();
+            value = getInputInteger();
         }
         return value;
     }
 
-   static String getString() {
+   static String getInputString() {
         String value = scanner.nextLine();
 
         while (value.isBlank()) {

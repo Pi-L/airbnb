@@ -16,7 +16,7 @@ public class GestionHotes {
         System.out.println("2 : Supprimer un hôte");
         System.out.println("3 : Retour");
 
-        switch (Menu.getInteger(1,3)) {
+        switch (Menu.getInputInteger(1,3)) {
             case 1:
                 try {
                     ajouterHote();
@@ -29,8 +29,13 @@ public class GestionHotes {
                 }
                 break;
             case 2:
-                supprimerHote();
-                listerHotes();
+                try {
+                    supprimerHote();
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Echec de la suppression - l'hôte choisi n'existe pas : "+e.getMessage());
+                } finally {
+                    listerHotes();
+                }
                 break;
             case 3:
                 Menu.listerMenu();
@@ -39,9 +44,10 @@ public class GestionHotes {
     }
 
     static void ajouterHote() throws Exception {
-        // would be cleaner to use Menu.getString() though =)
+        // would be cleaner to use Menu.getInputString() though =)
 
         System.out.println("-------------------------------------");
+        System.out.println("Ajouter un Hôte");
         System.out.println("Nom :");
         String nom = Menu.scanner.nextLine();
         System.out.println("Prenom :");
@@ -61,11 +67,22 @@ public class GestionHotes {
         Menu.hoteList.add(hote);
     }
 
-    static void supprimerHote() {
+    /**
+     *
+     * @throws IndexOutOfBoundsException doesn't really throw anything but let say it does =)
+     */
+    static void supprimerHote() throws IndexOutOfBoundsException {
+        System.out.println("-------------------------------------");
+        System.out.println("Supprimer un Hôte");
+
+        // Uncomment to test the IndexOutOfBoundsException
+        // Menu.hoteList.remove(555);
+
         if(Menu.hoteList.size() == 0) System.out.println("Il n'y a pas d'hote à supprimer !");
         else {
             System.out.println("Choisir un hote à supprimer :");
-            int indexPlusOne = Menu.getInteger(1, Menu.hoteList.size());
+            int indexPlusOne = Menu.getInputInteger(1, Menu.hoteList.size());
+
             Menu.hoteList.remove(indexPlusOne - 1);
         }
     }
