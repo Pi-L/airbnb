@@ -5,6 +5,7 @@ import legeay.airbnb.logements.Appartement;
 import legeay.airbnb.logements.Logement;
 import legeay.airbnb.logements.Maison;
 import legeay.airbnb.outils.MaDate;
+import legeay.airbnb.outils.Utile;
 import legeay.airbnb.reservations.Reservation;
 import legeay.airbnb.reservations.Sejour;
 import legeay.airbnb.reservations.SejourCourt;
@@ -73,7 +74,11 @@ public class JeuDeTest {
             sejourList.add(sejour);
         }
 
-        reservation = new Reservation(sejourList, voyageur);
+        try {
+            reservation = new Reservation(sejourList, voyageur);
+        } catch (Exception e) {
+            Utile.alert(e.getMessage());
+        }
     }
 
 //        /**

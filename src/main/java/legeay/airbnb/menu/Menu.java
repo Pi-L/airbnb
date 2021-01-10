@@ -2,12 +2,19 @@ package legeay.airbnb.menu;
 
 import legeay.airbnb.AffichableInterface;
 import legeay.airbnb.logements.Appartement;
+import legeay.airbnb.logements.Logement;
 import legeay.airbnb.logements.Maison;
+import legeay.airbnb.outils.MaDate;
 import legeay.airbnb.outils.Utile;
+import legeay.airbnb.reservations.Reservation;
+import legeay.airbnb.reservations.Sejour;
+import legeay.airbnb.reservations.SejourCourt;
+import legeay.airbnb.reservations.SejourLong;
 import legeay.airbnb.utilisateurs.Hote;
 import legeay.airbnb.utilisateurs.Personne;
 import legeay.airbnb.utilisateurs.Voyageur;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -21,7 +28,11 @@ public class Menu {
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
 
-        init();
+        try {
+            init();
+        } catch (ParseException e) {
+            Utile.alert("Erreur dans le format de la date d'un sejour");
+        }
 
         Utile.info("-----------------------------");
         Utile.info("--- Bienvenue chez AirBnB ---");
@@ -51,6 +62,7 @@ public class Menu {
                 GestionVoyageurs.listerVoyageurs();
                 break;
             case 4:
+                GestionReservations.listerReservations();
                 break;
             case 5:
                 // not needed here but good to know
@@ -60,17 +72,31 @@ public class Menu {
         }
     }
 
-    static void init() {
+    static void init() throws ParseException {
         hoteList = new ArrayList<>();
         voyageurList = new ArrayList<>();
 
         hoteList.add(new Hote("titi", "rodriguez", 54, 234));
         hoteList.add(new Hote("Son", "Goku", 54, 1));
 
-        new Maison(hoteList.get(0), 50, "32 rue de la raclette", 120, 12, 0, false);
-        new Appartement(hoteList.get(0), 31, "33 rue de la fondu", 42, 5, 1, 4);
+        Logement logement1 = new Maison(hoteList.get(0), 50, "32 rue de la raclette", 120, 12, 0, false);
+        Logement logement2 = new Appartement(hoteList.get(0), 31, "33 rue de la fondu", 42, 5, 1, 4);
 
+        voyageurList.add(new Voyageur("Helmut", "Shmit", 33));
+        voyageurList.add(new Voyageur("Ken", "Hokuto No", 54));
 
+        Sejour sejour1 = new SejourCourt(new MaDate("25/02/2021"), 5, logement1, 6);
+        Sejour sejour2 = new SejourLong(new MaDate("6/03/2021"), 12, logement2, 5);
+
+        List<Sejour> resa1SejourList = new ArrayList<>();
+        resa1SejourList.add(sejour1);
+        resa1SejourList.add(sejour2);
+
+        try {
+            Reservation reservation1 = new Reservation(resa1SejourList, voyageurList.get(1));
+        } catch (Exception e) {
+            Utile.alert(e.getMessage());
+        }
     }
 
     static void afficherPersonneList(List<? extends Personne> pList) {
@@ -80,6 +106,8 @@ public class Menu {
             for (int i = 0; i < pList.size(); i++) {
                 System.out.print((i+1)+". ");
                 pList.get(i).afficher();
+
+                if(pList.get(i).getClass().getSimpleName().equals("Voyageur")) System.out.println();
             }
         }
     }

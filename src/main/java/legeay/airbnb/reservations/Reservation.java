@@ -1,11 +1,20 @@
 package legeay.airbnb.reservations;
 
 import legeay.airbnb.AffichableInterface;
+import legeay.airbnb.logements.Logement;
 import legeay.airbnb.outils.ConsoleColors;
 import legeay.airbnb.outils.MaDate;
+import legeay.airbnb.outils.Utile;
 import legeay.airbnb.utilisateurs.Voyageur;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Reservation implements AffichableInterface {
@@ -25,16 +34,27 @@ public class Reservation implements AffichableInterface {
      * @param sejours
      * @param voyageur
      */
-    public Reservation(List<Sejour> sejours, Voyageur voyageur) {
+    public Reservation(List<Sejour> sejours, Voyageur voyageur) throws Exception {
         this.sejours = sejours;
         this.voyageur = voyageur;
         dateDeReservation = new MaDate();
         estValidee = isValid();
 
-        id = ++index;
+        if(!estValidee) {
+            removeAllSejours();
+            throw new Exception(" La reservation ne peut être créée car elle ne remplie pas les conditions de validitées ");
+        }
 
-        // prixReservation is affected with the sum of all sejour's prices
-        prixReservation = this.sejours.stream().reduce(0, (acc, sejour) -> acc + sejour.getTarif(), Integer::sum);
+        id = ++index;
+        setPrixReservation();
+
+        voyageur.getReservationList().add(this);
+        try {
+            writeToFile("reservation" +id+".txt");
+        } catch(IOException e) {
+            Utile.alert("La reservation n'a pas pus etre enregistré dans le fichier :/");
+            System.out.println("Erreur --> " + e.getMessage());
+        }
     }
 
     /**
@@ -78,6 +98,23 @@ public class Reservation implements AffichableInterface {
         return !isDatesOverlap() && sejours.stream().allMatch(sejour -> sejour.isValid());
     }
 
+    private Date getPremiereDateArrivee() {
+        Date premiereDate = null;
+
+        for (int i = 0; i < sejours.size(); i++) {
+            if(premiereDate == null) premiereDate = sejours.get(i).getDateArrivee();
+            else if(sejours.get(i).getDateArrivee().before(premiereDate)) {
+                premiereDate = sejours.get(i).getDateArrivee();
+            }
+        }
+
+        return premiereDate;
+    }
+
+    private int getNbNuitsTotal() {
+        return this.sejours.stream().reduce(0, (acc, sejour) -> acc + sejour.getNbNuits(), Integer::sum);
+    }
+
     /**
      * <p>Compare all sejours date ranges with each other to determine if there is overlapping</p>
      * @return
@@ -108,5 +145,64 @@ public class Reservation implements AffichableInterface {
         }
 
         return false;
+    }
+
+    private void setPrixReservation() {
+        // prixReservation is affected with the sum of all sejour's prices
+        if(sejours != null) {
+            prixReservation = this.sejours.stream().reduce(0, (acc, sejour) -> acc + sejour.getTarif(), Integer::sum);
+        }
+        else {
+            prixReservation = 0;
+        }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Voyageur getVoyageur() {
+        return voyageur;
+    }
+
+    public List<Sejour> getSejours() {
+        return sejours;
+    }
+
+    public void addASejour(Sejour sejour) {
+        sejours.add(sejour);
+        setPrixReservation();
+    }
+
+    public void removeASejour(Sejour sejour) {
+        sejour.getLogement().getSejourList().remove(sejour);
+        sejours.remove(sejour);
+        setPrixReservation();
+    }
+
+    public void removeAllSejours() {
+        sejours.forEach(sejour -> sejour.getLogement().getSejourList().remove(sejour));
+        sejours = new ArrayList<>();
+        setPrixReservation();
+    }
+
+    public void writeToFile(String fileName) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, false));
+        writer.append("Numero du voyageur : "+voyageur.getId());
+        writer.newLine();
+
+        List<Logement> distinctLogements = sejours.stream().map(sejour -> sejour.getLogement()).distinct().collect(Collectors.toList());
+        for (int i = 0; i < distinctLogements.size(); i++) {
+            writer.append("Numero du logement : "+distinctLogements.get(i).getId());
+            writer.newLine();
+        }
+
+        writer.append("Date d'arrivée (JJ/MM/AA) : "+getPremiereDateArrivee());
+        writer.newLine();
+        writer.append("Nombre de nuits au total : "+getNbNuitsTotal());
+        writer.newLine();
+        writer.append("Nombre de personnes : "+sejours.get(0).getNbVoyageurs()); // oui je triche là :p
+
+        writer.close();
     }
 }

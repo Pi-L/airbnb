@@ -4,7 +4,7 @@ import legeay.airbnb.AffichableInterface;
 import legeay.airbnb.outils.ConsoleColors;
 
 public abstract class Personne implements AffichableInterface {
-
+    protected int id;
     private String prenom;
     private String nom;
     private int age;
@@ -28,5 +28,9 @@ public abstract class Personne implements AffichableInterface {
 
     public void afficher() {
         System.out.print(ConsoleColors.RED+prenom+" "+nom+ConsoleColors.RESET+" ("+age+" ans)");
+    }
+
+    public int getId() {
+        return id;
     }
 }

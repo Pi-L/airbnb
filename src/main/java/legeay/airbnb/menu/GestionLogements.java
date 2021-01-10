@@ -5,17 +5,12 @@ import legeay.airbnb.logements.Logement;
 import legeay.airbnb.logements.Maison;
 import legeay.airbnb.outils.Utile;
 import legeay.airbnb.utilisateurs.Hote;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class GestionLogements {
 
-    static List<Logement> logementList;
-
     static void listerLogements() {
-        initLogement();
 
         System.out.println();
         Utile.info("-------------------------------------");
@@ -41,7 +36,7 @@ public class GestionLogements {
                 listerLogements();
                 break;
             case 2:
-                if(logementList.size() == 0) Utile.alert("Il n'y a pas de logement à supprimer !");
+                if(getLogementList().size() == 0) Utile.alert("Il n'y a pas de logement à supprimer !");
                 else supprimerLogement();
 
                 listerLogements();
@@ -52,14 +47,15 @@ public class GestionLogements {
         }
     }
 
-    static void initLogement() {
-        logementList = new ArrayList<>();
-        logementList = Menu.hoteList.stream()
+    static List<Logement> getLogementList() {
+        return  Menu.hoteList.stream()
                 .flatMap(hote -> hote.getLogementList().stream())
                 .collect(Collectors.toList());
     }
 
     static void afficherLogementList() {
+        List<Logement> logementList = getLogementList();
+
         if(logementList.size() == 0) Utile.warn("Il n'y a pas de logement à afficher");
         else {
             for (int i = 0; i < logementList.size(); i++) {
@@ -126,6 +122,8 @@ public class GestionLogements {
 
 
     static void supprimerLogement() {
+        List<Logement> logementList = getLogementList();
+
         Utile.info("-------------------------------------");
         Utile.info("Supprimer un logement");
         System.out.println("Choisir un Logement à supprimer :");

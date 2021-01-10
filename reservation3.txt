@@ -1,0 +1,5 @@
+Numero du voyageur : 2
+Numero du logement : 2
+Date d'arrivée (JJ/MM/AA) : 22/01/21
+Nombre de nuits au total : 11
+Nombre de personnes : 3

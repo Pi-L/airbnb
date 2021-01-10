@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hote extends Personne {
+    private static int index = 0;
 
     private int delaiDeReponse;
     private List<Logement> logementList;
@@ -14,6 +15,7 @@ public class Hote extends Personne {
         super(prenom, nom, age);
         logementList = new ArrayList<>();
         this.delaiDeReponse = delaiDeReponse;
+        id = ++index;
     }
 
     @Override

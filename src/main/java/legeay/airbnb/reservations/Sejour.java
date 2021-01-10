@@ -3,6 +3,8 @@ package legeay.airbnb.reservations;
 import legeay.airbnb.AffichableInterface;
 import legeay.airbnb.logements.Logement;
 import legeay.airbnb.outils.MaDate;
+import legeay.airbnb.outils.Utile;
+
 import java.util.Date;
 
 public abstract class Sejour implements SejourInterface, AffichableInterface {
@@ -28,6 +30,8 @@ public abstract class Sejour implements SejourInterface, AffichableInterface {
 
         // abstract method implemented in sub-classes
         miseAJourDuTarif();
+
+        this.logement.getSejourList().add(this);
     }
 
     /**
@@ -47,6 +51,7 @@ public abstract class Sejour implements SejourInterface, AffichableInterface {
 
     public void afficher() {
         logement.afficher();
+        Utile.warn("Sejour pour la reservation : "+(reservation != null ? "n°"+reservation.getId(): "reservation non créée"));
         System.out.println("Séjour du "+dateArrivee.toString()+" au "+getDateDepart().toString()+" ("+nbNuits+" nuit"+(nbNuits>1?"s":"")+").");
     }
 
@@ -66,9 +71,15 @@ public abstract class Sejour implements SejourInterface, AffichableInterface {
         return nbNuits;
     }
 
-    protected Logement getLogement() {
+    public Logement getLogement() {
         return logement;
     }
+
+    public int getNbVoyageurs() {
+        return nbVoyageurs;
+    }
+
+    public Reservation getReservation() { return  reservation; }
 
     // needed to be here instead of ConditionsTarifairesInterface because it is used in Reservation
     public int getTarif() {

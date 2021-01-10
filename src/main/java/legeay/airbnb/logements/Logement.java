@@ -3,6 +3,7 @@ package legeay.airbnb.logements;
 import legeay.airbnb.reservations.Sejour;
 import legeay.airbnb.utilisateurs.Hote;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ public abstract class Logement {
     private String adresse;
     private int superficie;
     private int nbVoyageursMax;
+
     private List<Sejour> sejourList;
 
     /**
@@ -36,15 +38,19 @@ public abstract class Logement {
         this.superficie = superficie;
         this.nbVoyageursMax = nbVoyageursMax;
 
-        this.hote.getLogementList().add(this);
-
         id = ++index;
+        sejourList = new ArrayList<>();
+
+        this.hote.getLogementList().add(this);
     }
 
     public abstract void afficher();
 
     public abstract int getSuperficieTotale();
 
+    public int getId() {
+        return id;
+    }
 
     public int getNbVoyageursMax() {
         return nbVoyageursMax;
@@ -66,6 +72,9 @@ public abstract class Logement {
         return superficie;
     }
 
+    public List<Sejour> getSejourList() {
+        return sejourList;
+    }
 
     @Override
     public String toString() {
