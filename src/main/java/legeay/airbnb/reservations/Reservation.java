@@ -22,7 +22,7 @@ public class Reservation implements AffichableInterface {
     private static int index = 0;
 
     private int id;
-    private List<Sejour> sejours;
+    private List<Sejour> sejours = new ArrayList<>();
     private Voyageur voyageur;
     private boolean estValidee;
     private MaDate dateDeReservation;
@@ -35,7 +35,8 @@ public class Reservation implements AffichableInterface {
      * @param voyageur
      */
     public Reservation(List<Sejour> sejours, Voyageur voyageur) throws Exception {
-        this.sejours = sejours;
+        if(sejours != null) sejours.forEach(sejour -> this.addASejour(sejour));
+
         this.voyageur = voyageur;
         dateDeReservation = new MaDate();
         estValidee = isValid();
@@ -46,7 +47,6 @@ public class Reservation implements AffichableInterface {
         }
 
         id = ++index;
-        setPrixReservation();
 
         voyageur.getReservationList().add(this);
         try {
@@ -172,6 +172,7 @@ public class Reservation implements AffichableInterface {
     public void addASejour(Sejour sejour) {
         sejours.add(sejour);
         setPrixReservation();
+        sejour.setReservation(this);
     }
 
     public void removeASejour(Sejour sejour) {
@@ -181,7 +182,10 @@ public class Reservation implements AffichableInterface {
     }
 
     public void removeAllSejours() {
-        sejours.forEach(sejour -> sejour.getLogement().getSejourList().remove(sejour));
+        sejours.forEach(sejour -> {
+            sejour.getLogement().getSejourList().remove(sejour);
+            sejour.setReservation(null);
+        });
         sejours = new ArrayList<>();
         setPrixReservation();
     }

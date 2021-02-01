@@ -3,6 +3,8 @@ package legeay.airbnb.logements;
 import legeay.airbnb.outils.ConsoleColors;
 import legeay.airbnb.utilisateurs.Hote;
 
+import java.util.Objects;
+
 public class Maison extends Logement{
 
     private int superficieJardin;
@@ -24,6 +26,10 @@ public class Maison extends Logement{
         this.possedePiscine = possedePiscine;
     }
 
+    public Maison(Hote hote, Maison maison) {
+        this(hote, maison.getTarifJournalier(), maison.getAdresse(), maison.getSuperficie(), maison.getNbVoyageursMax(), maison.superficieJardin, maison.possedePiscine);
+    }
+
     @Override
     public void afficher() {
         getHote().afficher();
@@ -36,5 +42,19 @@ public class Maison extends Logement{
     @Override
     public int getSuperficieTotale() {
         return getSuperficie() + superficieJardin;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Maison maison = (Maison) o;
+        return superficieJardin == maison.superficieJardin && possedePiscine == maison.possedePiscine;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), superficieJardin, possedePiscine);
     }
 }

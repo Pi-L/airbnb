@@ -90,6 +90,8 @@ public abstract class Sejour implements SejourInterface, AffichableInterface {
         tarif = pTarif;
     };
 
-
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
+    }
 
 }

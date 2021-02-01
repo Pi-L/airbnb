@@ -3,4 +3,4 @@ Numero du logement : 1
 Numero du logement : 2
 Date d'arrivée (JJ/MM/AA) : 25/02/21
 Nombre de nuits au total : 17
-Nombre de personnes : 6
+Nombre de personnes : 2

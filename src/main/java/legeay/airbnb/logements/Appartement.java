@@ -2,7 +2,10 @@ package legeay.airbnb.logements;
 
 import legeay.airbnb.AffichableInterface;
 import legeay.airbnb.outils.ConsoleColors;
+import legeay.airbnb.outils.Utile;
 import legeay.airbnb.utilisateurs.Hote;
+
+import java.util.Objects;
 
 /**
  * <p></p>
@@ -26,6 +29,10 @@ public class Appartement extends Logement implements AffichableInterface {
         super(hote, tarifJournalier, adresse, superficie, nbVoyageursMax);
         this.numeroEtage = numeroEtage;
         this.superficieBalcon = superficieBalcon;
+    }
+
+    public Appartement(Hote hote, Appartement appartement) {
+        this(hote, appartement.getTarifJournalier(), appartement.getAdresse(), appartement.getSuperficie(), appartement.getNbVoyageursMax(), appartement.numeroEtage, appartement.superficieBalcon);
     }
 
     /**
@@ -57,5 +64,19 @@ public class Appartement extends Logement implements AffichableInterface {
         else if(numeroEtage > 1 ) return numeroEtage+"ème étage";
 
         return "rez-de-chaussée";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Appartement that = (Appartement) o;
+        return numeroEtage == that.numeroEtage && superficieBalcon == that.superficieBalcon;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), numeroEtage, superficieBalcon);
     }
 }

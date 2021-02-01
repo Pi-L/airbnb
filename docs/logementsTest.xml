@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<Logements>
+	<Appartement>
+		<hote>
+			<nom>Bardu</nom>
+			<prenom>Peter</prenom>
+			<age>31</age>
+			<delaiDeReponse>12</delaiDeReponse>
+		</hote>
+		<tarifJournalier>50</tarifJournalier>
+		<adresse>81 rue Colbert, Tours</adresse>
+		<superficie>58</superficie>
+		<nbVoyageursMax>4</nbVoyageursMax>
+		<numeroEtage>2</numeroEtage>
+		<superficieBalcon>10</superficieBalcon>
+	</Appartement>
+	<Appartement>
+		<hote>
+			<nom>toto</nom>
+			<prenom>Peter</prenom>
+			<age>31</age>
+			<delaiDeReponse>12</delaiDeReponse>
+		</hote>
+		<tarifJournalier>50</tarifJournalier>
+		<adresse>81 rue Colbert, Tours</adresse>
+		<superficie>58</superficie>
+		<nbVoyageursMax>4</nbVoyageursMax>
+		<numeroEtage>2</numeroEtage>
+		<superficieBalcon>10</superficieBalcon>
+	</Appartement>
+</Logements>
+
+

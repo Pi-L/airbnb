@@ -1,10 +1,14 @@
 package legeay.airbnb.logements;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import legeay.airbnb.outils.Utile;
 import legeay.airbnb.reservations.Sejour;
 import legeay.airbnb.utilisateurs.Hote;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -14,6 +18,7 @@ public abstract class Logement {
     private int id;
 
     private Hote hote;
+    @XStreamAlias("tarifParNuit")
     private int tarifJournalier;
     private String adresse;
     private int superficie;
@@ -76,6 +81,10 @@ public abstract class Logement {
         return sejourList;
     }
 
+    public void setHote(Hote hote) {
+        this.hote = hote;
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName()+" -> {\n" +
@@ -85,5 +94,18 @@ public abstract class Logement {
                 ", superficie=" + superficie +
                 ", nbVoyageursMax=" + nbVoyageursMax +
                 "\n}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Logement logement = (Logement) o;
+        return tarifJournalier == logement.tarifJournalier && superficie == logement.superficie && nbVoyageursMax == logement.nbVoyageursMax && hote.equals(logement.hote) && adresse.equals(logement.adresse);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hote, tarifJournalier, adresse, superficie, nbVoyageursMax);
     }
 }

@@ -3,6 +3,8 @@ package legeay.airbnb.utilisateurs;
 import legeay.airbnb.AffichableInterface;
 import legeay.airbnb.outils.ConsoleColors;
 
+import java.util.Objects;
+
 public abstract class Personne implements AffichableInterface {
     protected int id;
     private String prenom;
@@ -32,5 +34,31 @@ public abstract class Personne implements AffichableInterface {
 
     public int getId() {
         return id;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+        Personne personne = (Personne) o;
+        return age == personne.age && prenom.equals(personne.prenom) && nom.equals(personne.nom);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(prenom, nom, age);
     }
 }
