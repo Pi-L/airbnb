@@ -21,4 +21,5 @@ public class Voyageur extends Personne {
     public List<Reservation> getReservationList() {
         return reservationList;
     }
+
 }

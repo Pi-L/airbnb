@@ -1,24 +1,18 @@
 package legeay.airbnb.utilisateurs;
 
 import legeay.airbnb.AffichableInterface;
+import legeay.airbnb.Comparaison;
+import legeay.airbnb.logements.Logement;
 import legeay.airbnb.outils.ConsoleColors;
 
+import java.util.Comparator;
 import java.util.Objects;
 
-public abstract class Personne implements AffichableInterface {
+public abstract class Personne implements AffichableInterface, Comparable<Personne>, Comparaison {
     protected int id;
     private String prenom;
     private String nom;
     private int age;
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName()+" -> {\n"+
-                "\tprenom='" + prenom + '\'' +
-                ", nom='" + nom + '\'' +
-                ", age=" + age +
-                '}';
-    }
 
     public Personne(String prenom, String nom, int age) {
         super();
@@ -48,6 +42,16 @@ public abstract class Personne implements AffichableInterface {
         return age;
     }
 
+    public int getComparable() {
+        return age;
+    }
+
+    @Override
+    public int compareTo(Personne personne) {
+        return Integer.compare(this.getComparable(), personne.getComparable());
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,5 +64,14 @@ public abstract class Personne implements AffichableInterface {
     @Override
     public int hashCode() {
         return Objects.hash(prenom, nom, age);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName()+" -> {\n"+
+                "\tprenom='" + prenom + '\'' +
+                ", nom='" + nom + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

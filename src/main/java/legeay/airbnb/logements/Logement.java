@@ -2,18 +2,17 @@ package legeay.airbnb.logements;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import legeay.airbnb.Comparaison;
 import legeay.airbnb.outils.Utile;
 import legeay.airbnb.reservations.Sejour;
 import legeay.airbnb.utilisateurs.Hote;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  *
  */
-public abstract class Logement {
+public abstract class Logement implements Comparable<Logement>, Comparaison {
     private static int index = 0;
     private int id;
 
@@ -23,6 +22,7 @@ public abstract class Logement {
     private String adresse;
     private int superficie;
     private int nbVoyageursMax;
+    private String name;
 
     private List<Sejour> sejourList;
 
@@ -42,6 +42,7 @@ public abstract class Logement {
         this.adresse = adresse;
         this.superficie = superficie;
         this.nbVoyageursMax = nbVoyageursMax;
+        this.name = "";
 
         id = ++index;
         sejourList = new ArrayList<>();
@@ -85,6 +86,23 @@ public abstract class Logement {
         this.hote = hote;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getComparable() {
+        return tarifJournalier;
+    }
+
+    @Override
+    public int compareTo(Logement logement) {
+        return Integer.compare(this.getComparable(), logement.getComparable());
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName()+" -> {\n" +
@@ -98,9 +116,20 @@ public abstract class Logement {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        System.out.println("logement equals()  -> "+ Math.random());
+
+        if (this == o) {
+            System.out.println("logement equals()  -> true");
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            System.out.println("logement equals()  -> false");
+            return false;
+        }
         Logement logement = (Logement) o;
+        System.out.println("logement equals() final test ->"
+        + (tarifJournalier == logement.tarifJournalier && superficie == logement.superficie && nbVoyageursMax == logement.nbVoyageursMax && hote.equals(logement.hote) && adresse.equals(logement.adresse)));
+
         return tarifJournalier == logement.tarifJournalier && superficie == logement.superficie && nbVoyageursMax == logement.nbVoyageursMax && hote.equals(logement.hote) && adresse.equals(logement.adresse);
     }
 

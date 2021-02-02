@@ -5,9 +5,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import com.thoughtworks.xstream.security.NoTypePermission;
 import legeay.airbnb.AffichableInterface;
+import legeay.airbnb.CompareGenericList;
 import legeay.airbnb.logements.Appartement;
 import legeay.airbnb.logements.Logement;
 import legeay.airbnb.logements.Maison;
+import legeay.airbnb.outils.CompareGeneric;
 import legeay.airbnb.outils.MaDate;
 import legeay.airbnb.outils.Utile;
 import legeay.airbnb.reservations.Reservation;
@@ -57,9 +59,10 @@ public class Menu {
         System.out.println("2 : Liste des logements");
         System.out.println("3 : Liste des voyageurs");
         System.out.println("4 : Liste des réservations");
-        System.out.println("5 : Fermer le programme");
+        System.out.println("5 : Trouver logement par nom");
+        System.out.println("6 : Fermer le programme");
         Utile.info("-----------------------------");
-        switch (Menu.getInputInteger(1,5)) {
+        switch (Menu.getInputInteger(1,6)) {
             case 1:
                 GestionHotes.listerHotes();
                 break;
@@ -73,6 +76,37 @@ public class Menu {
                 GestionReservations.listerReservations();
                 break;
             case 5:
+                CompareGeneric<Hote> compareGenericHote = new CompareGeneric<>(hoteList.get(0), hoteList.get(1));
+//                compareGenericHote.getLower().afficher();
+//                compareGenericHote.getHigher().afficher();
+
+                CompareGenericList<Hote> compareGenericList = new CompareGenericList(hoteList);
+                Optional<Hote> myHoteHigher = compareGenericList.getHigher();
+                Optional<Hote> myHoteLower = compareGenericList.getLower();
+
+                if(myHoteHigher.isPresent() && myHoteLower.isPresent()) {
+//                    myHoteLower.get().afficher();
+//                    myHoteHigher.get().afficher();
+                }
+
+                compareGenericList.sortAsc();
+                compareGenericList.afficher();
+                compareGenericList.sortDesc();
+                compareGenericList.afficher();
+
+                List<Maison> maisonList = GestionLogements.getLogementList().stream()
+                        .filter(logt -> logt instanceof Maison)
+                        .map(maison -> (Maison) maison)
+                        .collect(Collectors.toList());
+                // Maison maMaison = findMaisonByName(maisonList, "Bardu");
+                Optional<Maison> maMaison = findLogementByNameWithGenericity(maisonList, "Bardu");
+                // if(maMaison.isPresent()) maMaison.get().afficher();
+
+                // Logement monLogement = findLogementByName(GestionLogements.getLogementList(), "Bardu");
+                Optional<Logement> monLogement = findLogementByNameWithGenericity(GestionLogements.getLogementList(), "Bardu");
+                // if(monLogement.isPresent()) monLogement.get().afficher();
+                break;
+            case 6:
                 // not needed here but good to know
                 // 0 means normal exit
                 // System.exit(0);
@@ -129,19 +163,17 @@ public class Menu {
             hoteList = logementSet.stream()
                     .map(Logement::getHote).distinct() // distinct() utilise la methode equals de Hote
                     .map(hote -> new Hote(hote))
-                    .map(hote ->
-                        {
-                            logementSet.forEach(logement ->
-                                {
-                                    if (hote.equals(logement.getHote())) {
-                                        if (logement instanceof Maison) new Maison(hote, (Maison) logement);
-                                        else if (logement instanceof Appartement) new Appartement(hote, (Appartement) logement);
-                                    }
-                                }
-                            );
-                            return hote;
-                        }
-                    )
+                    .map(hote -> {
+                        logementSet.forEach(logement -> {
+                            if (hote.equals(logement.getHote())) {
+
+                                if (logement instanceof Maison) (new Maison(hote, (Maison) logement)).setName(hote.getNom()+logement.getId());
+                                else if (logement instanceof Appartement) (new Appartement(hote, (Appartement) logement)).setName(hote.getNom()+logement.getId());
+                            }
+                        });
+
+                        return hote;
+                    })
                     .collect(Collectors.toList());
 
             return hoteList;
@@ -227,7 +259,7 @@ public class Menu {
         return value;
     }
 
-   static String getInputString() {
+    static String getInputString() {
         String value = scanner.nextLine();
 
         while (value.isBlank()) {
@@ -235,5 +267,33 @@ public class Menu {
             value = scanner.nextLine();
         }
         return value;
+    }
+
+    static Maison findMaisonByName(List<Maison> maisonList, String name) {
+        for (Maison maison : maisonList) if(maison.getName().contains(name)) return maison;
+
+        return null;
+    }
+
+    static Appartement findAppartementByName(List<Appartement> appartementList, String name) {
+        for (Appartement appartement : appartementList)  if(appartement.getName().contains(name)) return appartement;
+
+        return null;
+    }
+
+    static Logement findLogementByName(List<Logement> logementList, String name) {
+        for (Logement logement : logementList) if(logement.getName().contains(name)) return logement;
+
+        return null;
+    }
+
+    static <T extends Logement> Optional<T> findLogementByNameWithGenericity(List<T> logementList, String name) {
+        Optional<T> logementOptional = Optional.empty();
+
+        for (T logement : logementList) {
+            if(logement.getName().contains(name)) return logementOptional;
+        }
+
+        return logementOptional;
     }
 }

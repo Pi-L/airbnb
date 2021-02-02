@@ -5,6 +5,7 @@ import legeay.airbnb.logements.Logement;
 import legeay.airbnb.outils.Utile;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,6 +41,17 @@ public class Hote extends Personne {
 
     public int getDelaiDeReponse() {
         return delaiDeReponse;
+    }
+
+    @Override
+    public int getComparable() {
+        return delaiDeReponse;
+    }
+
+    @Override
+    public int compareTo(Personne personne) {
+        Hote hote = (Hote) personne;
+        return Integer.compare(this.getComparable(), hote.getComparable());
     }
 
     @Override
