@@ -132,10 +132,6 @@ public class GestionReservations {
 
         Reservation reservationToRemove = reservationList.get(index);
 
-        Voyageur voyageur = reservationToRemove.getVoyageur();
-        voyageur.getReservationList().remove(reservationToRemove);
-
-        reservationToRemove.removeAllSejours();
-        reservationToRemove = null;
+        reservationToRemove.close();
     }
 }

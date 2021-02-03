@@ -43,4 +43,11 @@ public class SejourLong extends Sejour  implements ConditionsTarifairesInterface
         System.out.println("Le prix de ce séjour est de "+getTarif()+"€ ("+promotion+"€ de promotion).");
     }
 
+    @Override
+    public Object clone() {
+        SejourLong sejourLong;
+        sejourLong = (SejourLong) super.clone();
+        return sejourLong;
+    }
+
 }

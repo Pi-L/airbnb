@@ -10,9 +10,9 @@ import java.util.Objects;
 
 public abstract class Personne implements AffichableInterface, Comparable<Personne>, Comparaison {
     protected int id;
-    private String prenom;
-    private String nom;
-    private int age;
+    private final String prenom;
+    private final String nom;
+    private final int age;
 
     public Personne(String prenom, String nom, int age) {
         super();
@@ -27,7 +27,8 @@ public abstract class Personne implements AffichableInterface, Comparable<Person
     }
 
     public int getId() {
-        return id;
+        int myId = this.id;
+        return myId;
     }
 
     public String getPrenom() {
@@ -35,7 +36,7 @@ public abstract class Personne implements AffichableInterface, Comparable<Person
     }
 
     public String getNom() {
-        return nom;
+        return this.nom.toUpperCase();
     }
 
     public int getAge() {
@@ -58,7 +59,7 @@ public abstract class Personne implements AffichableInterface, Comparable<Person
 
         if (o == null || getClass() != o.getClass()) return false;
         Personne personne = (Personne) o;
-        return age == personne.age && prenom.equals(personne.prenom) && nom.equals(personne.nom);
+        return age == personne.age && prenom.equals(personne.prenom) && getNom().equals(personne.getNom());
     }
 
     @Override

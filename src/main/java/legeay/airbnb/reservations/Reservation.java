@@ -22,9 +22,9 @@ public class Reservation implements AffichableInterface {
     private static int index = 0;
 
     private int id;
-    private List<Sejour> sejours = new ArrayList<>();
-    private Voyageur voyageur;
-    private boolean estValidee;
+    private final List<Sejour> sejours = new ArrayList<>();
+    private final Voyageur voyageur;
+    private boolean estValidee = false;
     private MaDate dateDeReservation;
     private int prixReservation;
 
@@ -34,8 +34,11 @@ public class Reservation implements AffichableInterface {
      * @param sejours
      * @param voyageur
      */
-    public Reservation(List<Sejour> sejours, Voyageur voyageur) throws Exception {
-        if(sejours != null) sejours.forEach(sejour -> this.addASejour(sejour));
+    public Reservation(List<Sejour> sejours, Voyageur voyageur) throws IllegalArgumentException {
+        if(sejours == null || sejours.size() == 0) throw new IllegalArgumentException("Param sejours ne peut être null ou vide");
+        if(voyageur == null) throw new IllegalArgumentException("Param voyageur ne peut être null");
+
+        sejours.forEach(sejour -> this.addASejour(sejour));
 
         this.voyageur = voyageur;
         dateDeReservation = new MaDate();
@@ -43,7 +46,7 @@ public class Reservation implements AffichableInterface {
 
         if(!estValidee) {
             removeAllSejours();
-            throw new Exception(" La reservation ne peut être créée car elle ne remplie pas les conditions de validitées ");
+            throw new IllegalArgumentException(" La reservation ne peut être créée car elle ne remplie pas les conditions de validitées ");
         }
 
         id = ++index;
@@ -162,32 +165,37 @@ public class Reservation implements AffichableInterface {
     }
 
     public Voyageur getVoyageur() {
-        return voyageur;
+        return new Voyageur(voyageur);
     }
 
     public List<Sejour> getSejours() {
-        return sejours;
+        return sejours.stream().map(sejour -> (Sejour) sejour.clone())
+                .collect(Collectors.toList());
     }
 
-    public void addASejour(Sejour sejour) {
+    private void addASejour(Sejour sejour) {
         sejours.add(sejour);
         setPrixReservation();
         sejour.setReservation(this);
     }
 
-    public void removeASejour(Sejour sejour) {
+    private void removeASejour(Sejour sejour) {
         sejour.getLogement().getSejourList().remove(sejour);
         sejours.remove(sejour);
         setPrixReservation();
     }
 
-    public void removeAllSejours() {
+    private void removeAllSejours() {
         sejours.forEach(sejour -> {
             sejour.getLogement().getSejourList().remove(sejour);
             sejour.setReservation(null);
         });
-        sejours = new ArrayList<>();
+        sejours.clear();
         setPrixReservation();
+    }
+
+    public void setEstValidee(boolean estValidee) {
+        this.estValidee = estValidee;
     }
 
     public void writeToFile(String fileName) throws IOException {
@@ -208,5 +216,10 @@ public class Reservation implements AffichableInterface {
         writer.append("Nombre de personnes : "+sejours.get(0).getNbVoyageurs()); // oui je triche là :p
 
         writer.close();
+    }
+
+    public void close() {
+        voyageur.getReservationList().remove(this);
+        removeAllSejours();
     }
 }

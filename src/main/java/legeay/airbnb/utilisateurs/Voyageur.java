@@ -18,6 +18,10 @@ public class Voyageur extends Personne {
         id = ++index;
     }
 
+    public Voyageur(Voyageur voyageur) {
+        this(voyageur.getPrenom(), voyageur.getNom(), voyageur.getAge());
+    }
+
     public List<Reservation> getReservationList() {
         return reservationList;
     }

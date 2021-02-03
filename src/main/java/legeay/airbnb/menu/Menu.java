@@ -89,10 +89,10 @@ public class Menu {
 //                    myHoteHigher.get().afficher();
                 }
 
-                compareGenericList.sortAsc();
-                compareGenericList.afficher();
-                compareGenericList.sortDesc();
-                compareGenericList.afficher();
+//                compareGenericList.sortAsc();
+//                compareGenericList.afficher();
+//                compareGenericList.sortDesc();
+//                compareGenericList.afficher();
 
                 List<Maison> maisonList = GestionLogements.getLogementList().stream()
                         .filter(logt -> logt instanceof Maison)
@@ -105,6 +105,8 @@ public class Menu {
                 // Logement monLogement = findLogementByName(GestionLogements.getLogementList(), "Bardu");
                 Optional<Logement> monLogement = findLogementByNameWithGenericity(GestionLogements.getLogementList(), "Bardu");
                 // if(monLogement.isPresent()) monLogement.get().afficher();
+
+                 GestionSejour.getSejourList().get(0).setLogement(null);
                 break;
             case 6:
                 // not needed here but good to know
@@ -126,6 +128,7 @@ public class Menu {
 
         voyageurList.add(new Voyageur("Helmut", "Shmit", 33));
         voyageurList.add(new Voyageur("Ken", "Hokuto No", 54));
+
 
         Sejour sejour1 = new SejourCourt(new MaDate("25/02/2021"), 5, hoteList.get(0).getLogementList().get(0), 2);
         Sejour sejour2 = new SejourLong(new MaDate("6/03/2021"), 12, hoteList.get(0).getLogementList().get(1), 1);
@@ -166,7 +169,6 @@ public class Menu {
                     .map(hote -> {
                         logementSet.forEach(logement -> {
                             if (hote.equals(logement.getHote())) {
-
                                 if (logement instanceof Maison) (new Maison(hote, (Maison) logement)).setName(hote.getNom()+logement.getId());
                                 else if (logement instanceof Appartement) (new Appartement(hote, (Appartement) logement)).setName(hote.getNom()+logement.getId());
                             }

@@ -10,18 +10,20 @@ import legeay.airbnb.utilisateurs.Hote;
 import java.util.*;
 
 /**
- *
+ * immutable
  */
 public abstract class Logement implements Comparable<Logement>, Comparaison {
     private static int index = 0;
-    private int id;
+    private final int id;
 
-    private Hote hote;
+    private final Hote hote;
     @XStreamAlias("tarifParNuit")
-    private int tarifJournalier;
-    private String adresse;
-    private int superficie;
-    private int nbVoyageursMax;
+    private final int tarifJournalier;
+    private final String adresse;
+    private final int superficie;
+    private final int nbVoyageursMax;
+
+    // pas final : juste pour l'exo
     private String name;
 
     private List<Sejour> sejourList;
@@ -82,10 +84,6 @@ public abstract class Logement implements Comparable<Logement>, Comparaison {
         return sejourList;
     }
 
-    public void setHote(Hote hote) {
-        this.hote = hote;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -95,7 +93,7 @@ public abstract class Logement implements Comparable<Logement>, Comparaison {
     }
 
     public int getComparable() {
-        return tarifJournalier;
+        return getTarifJournalier();
     }
 
     @Override
@@ -116,20 +114,13 @@ public abstract class Logement implements Comparable<Logement>, Comparaison {
 
     @Override
     public boolean equals(Object o) {
-        System.out.println("logement equals()  -> "+ Math.random());
-
         if (this == o) {
-            System.out.println("logement equals()  -> true");
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
-            System.out.println("logement equals()  -> false");
             return false;
         }
         Logement logement = (Logement) o;
-        System.out.println("logement equals() final test ->"
-        + (tarifJournalier == logement.tarifJournalier && superficie == logement.superficie && nbVoyageursMax == logement.nbVoyageursMax && hote.equals(logement.hote) && adresse.equals(logement.adresse)));
-
         return tarifJournalier == logement.tarifJournalier && superficie == logement.superficie && nbVoyageursMax == logement.nbVoyageursMax && hote.equals(logement.hote) && adresse.equals(logement.adresse);
     }
 

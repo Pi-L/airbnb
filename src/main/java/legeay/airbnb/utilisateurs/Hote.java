@@ -13,7 +13,7 @@ public class Hote extends Personne {
     private static int index = 0;
 
     @XStreamAlias("delaiReponse")
-    private int delaiDeReponse;
+    private final int delaiDeReponse;
     private List<Logement> logementList = new ArrayList<>();
 
     public Hote(String prenom, String nom, int age, int delaiDeReponse) {
@@ -37,10 +37,6 @@ public class Hote extends Personne {
 
     public List<Logement> getLogementList() {
         return logementList;
-    }
-
-    public int getDelaiDeReponse() {
-        return delaiDeReponse;
     }
 
     @Override

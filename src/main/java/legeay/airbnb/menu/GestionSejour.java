@@ -129,7 +129,8 @@ public class GestionSejour {
         Reservation reservation = sejourToRemove.getReservation();
 
         if(reservation != null) {
-            reservation.removeASejour(sejourToRemove);
+            // commenter car TP9
+            // reservation.removeASejour(sejourToRemove);
         }
     }
 }

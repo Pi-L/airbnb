@@ -5,10 +5,13 @@ import legeay.airbnb.utilisateurs.Hote;
 
 import java.util.Objects;
 
+/**
+ * immutable
+ */
 public class Maison extends Logement{
 
-    private int superficieJardin;
-    private boolean possedePiscine;
+    private final int superficieJardin;
+    private final boolean possedePiscine;
 
     /**
      * <p>Maison constructor</p>
@@ -24,6 +27,10 @@ public class Maison extends Logement{
         super(hote, tarifJournalier, adresse, superficie, nbVoyageursMax);
         this.superficieJardin = superficieJardin;
         this.possedePiscine = possedePiscine;
+    }
+
+    public Maison(Maison maison) {
+        this(new Hote(maison.getHote()), maison.getTarifJournalier(), maison.getAdresse(), maison.getSuperficie(), maison.getNbVoyageursMax(), maison.superficieJardin, maison.possedePiscine);
     }
 
     public Maison(Hote hote, Maison maison) {

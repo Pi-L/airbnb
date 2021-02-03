@@ -7,7 +7,7 @@ import legeay.airbnb.outils.Utile;
 
 import java.util.Date;
 
-public abstract class Sejour implements SejourInterface, AffichableInterface {
+public abstract class Sejour implements SejourInterface, AffichableInterface, Cloneable {
 
     private static final int MIN_NB_NUITS = 1;
     private static final int MAX_NB_NUITS = 30;
@@ -60,11 +60,11 @@ public abstract class Sejour implements SejourInterface, AffichableInterface {
     }
 
     public Date getDateArrivee() {
-        return dateArrivee;
+        return new MaDate(dateArrivee);
     }
 
     public Date getDateDepart() {
-        return dateDepart;
+        return new MaDate(dateDepart);
     }
 
     protected int getNbNuits() {
@@ -86,6 +86,31 @@ public abstract class Sejour implements SejourInterface, AffichableInterface {
         return tarif;
     };
 
+    public void setDateArrivee(Date dateArrivee) {
+        this.dateArrivee = new MaDate(dateArrivee);
+    }
+
+    public void setDateDepart(Date dateDepart) {
+        this.dateDepart = new MaDate(dateDepart);
+    }
+
+    public void setNbNuits(int nbNuits) {
+        this.nbNuits = nbNuits;
+    }
+
+    // pas besoin de faire un new ou clone car logement est immuable
+    public void setLogement(Logement logement) throws IllegalArgumentException {
+        if(logement == null || logement.getNbVoyageursMax() < nbVoyageurs) throw new IllegalArgumentException("arg invalide pour setLogement");
+
+        this.logement = logement;
+        miseAJourDuTarif();
+    }
+
+    public void setNbVoyageurs(int nbVoyageurs) throws IllegalArgumentException {
+        if(nbVoyageurs == 0 || logement.getNbVoyageursMax() < nbVoyageurs) throw new IllegalArgumentException("arg invalide pour setNbVoyageurs");
+        this.nbVoyageurs = nbVoyageurs;
+    }
+
     protected void setTarif(int pTarif) {
         tarif = pTarif;
     };
@@ -94,4 +119,16 @@ public abstract class Sejour implements SejourInterface, AffichableInterface {
         this.reservation = reservation;
     }
 
+    @Override
+    protected Object clone() {
+        Sejour sejour = null;
+        try {
+            sejour = (Sejour) super.clone();
+        } catch(CloneNotSupportedException cnse) {
+            // Ne devrait jamais arriver car nous implémentons l'interface Cloneable
+            cnse.printStackTrace(System.err);
+        }
+
+        return sejour;
+    }
 }

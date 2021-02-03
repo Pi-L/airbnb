@@ -8,12 +8,12 @@ import legeay.airbnb.utilisateurs.Hote;
 import java.util.Objects;
 
 /**
- * <p></p>
+ * immutable
  */
 public class Appartement extends Logement implements AffichableInterface {
 
-    private int numeroEtage;
-    private int superficieBalcon;
+    private final int numeroEtage;
+    private final int superficieBalcon;
 
     /**
      * <p>Appartement Constructor</p>
@@ -29,6 +29,10 @@ public class Appartement extends Logement implements AffichableInterface {
         super(hote, tarifJournalier, adresse, superficie, nbVoyageursMax);
         this.numeroEtage = numeroEtage;
         this.superficieBalcon = superficieBalcon;
+    }
+
+    public Appartement(Appartement appartement) {
+        this(new Hote(appartement.getHote()), appartement.getTarifJournalier(), appartement.getAdresse(), appartement.getSuperficie(), appartement.getNbVoyageursMax(), appartement.numeroEtage, appartement.superficieBalcon);
     }
 
     public Appartement(Hote hote, Appartement appartement) {

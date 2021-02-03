@@ -26,6 +26,8 @@ public class MaDate extends Date {
         super();
     }
 
+
+
     /**
      * Construct a MaDate Object from a timestamp in millisecond
      * @param dateInMs timestamp
@@ -57,7 +59,25 @@ public class MaDate extends Date {
     }
 
     /**
-     * Construct a new MaDate Object with added days from an existing MaDate
+     * Construct a new MaDate Objectfrom an existing Date
+     *
+     * @param date
+     */
+    public MaDate(Date date) {
+        super(date.getTime());
+    }
+
+    /**
+     * Construct a new MaDate Objectfrom an existing Date
+     *
+     * @param maDate
+     */
+    public MaDate(MaDate maDate) {
+        super(maDate.getTime());
+    }
+
+    /**
+     * Construct a new MaDate Object with added days from an existing Date
      *
      * @param date
      * @param nbDays
