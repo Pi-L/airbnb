@@ -18,6 +18,15 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Reservation implements AffichableInterface {
+
+//    private class ReservationOperationImpl implements ReservationOperations {
+//        public void setEstValidee(boolean isValid) {
+//            Reservation.this.estValidee = isValid;
+//        }
+//    }
+// eventuellement faire un getter pour qui a le droit d'utiliser ça ... plop plop
+//private ReservationOperations reservationOperations = new ReservationOperationImpl();
+
     // In memory latest reservation identifiant
     private static int index = 0;
 
@@ -42,7 +51,8 @@ public class Reservation implements AffichableInterface {
 
         this.voyageur = voyageur;
         dateDeReservation = new MaDate();
-        estValidee = isValid();
+
+        setEstValidee();
 
         if(!estValidee) {
             removeAllSejours();
@@ -174,7 +184,7 @@ public class Reservation implements AffichableInterface {
     }
 
     private void addASejour(Sejour sejour) {
-        sejours.add(sejour);
+        sejours.add((Sejour) sejour.clone());
         setPrixReservation();
         sejour.setReservation(this);
     }
@@ -194,8 +204,8 @@ public class Reservation implements AffichableInterface {
         setPrixReservation();
     }
 
-    public void setEstValidee(boolean estValidee) {
-        this.estValidee = estValidee;
+    public void setEstValidee() {
+        this.estValidee = isValid();
     }
 
     public void writeToFile(String fileName) throws IOException {
