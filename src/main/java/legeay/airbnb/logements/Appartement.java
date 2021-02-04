@@ -39,6 +39,10 @@ public class Appartement extends Logement implements AffichableInterface {
         this(hote, appartement.getTarifJournalier(), appartement.getAdresse(), appartement.getSuperficie(), appartement.getNbVoyageursMax(), appartement.numeroEtage, appartement.superficieBalcon);
     }
 
+    public int getSuperficieBalcon() {
+        return superficieBalcon;
+    }
+
     /**
      * <p>Print in terminal informations relative to an appartment</p>
      */

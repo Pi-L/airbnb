@@ -2,11 +2,8 @@ package legeay.airbnb.menu;
 
 import legeay.airbnb.logements.Logement;
 import legeay.airbnb.outils.MaDate;
-import legeay.airbnb.reservations.Reservation;
-import legeay.airbnb.reservations.Sejour;
+import legeay.airbnb.reservations.*;
 import legeay.airbnb.outils.Utile;
-import legeay.airbnb.reservations.SejourCourt;
-import legeay.airbnb.reservations.SejourLong;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -104,11 +101,8 @@ public class GestionSejour {
         String dateArriveeString = Menu.getInputString();
         Date dateArrivee = new MaDate(dateArriveeString);
 
-        if(nbNuits > 5) {
-            return new SejourLong(dateArrivee, nbNuits, logement, nbVoyageurs);
-        } else {
-            return new SejourCourt(dateArrivee, nbNuits, logement, nbVoyageurs);
-        }
+         return SejourFactory.getSejour(dateArrivee, logement, nbNuits, nbVoyageurs);
+
     }
 
 

@@ -9,9 +9,7 @@ import legeay.airbnb.CompareGenericList;
 import legeay.airbnb.logements.Appartement;
 import legeay.airbnb.logements.Logement;
 import legeay.airbnb.logements.Maison;
-import legeay.airbnb.outils.CompareGeneric;
-import legeay.airbnb.outils.MaDate;
-import legeay.airbnb.outils.Utile;
+import legeay.airbnb.outils.*;
 import legeay.airbnb.reservations.Reservation;
 import legeay.airbnb.reservations.Sejour;
 import legeay.airbnb.reservations.SejourCourt;
@@ -76,6 +74,13 @@ public class Menu {
                 GestionReservations.listerReservations();
                 break;
             case 5:
+
+                Search search = new Search.SearchBuilder(2).possedeBalcon(false).possedeJardin(false).build();
+
+                List<Logement> logementsFound = search.result();
+
+                logementsFound.forEach(logement -> logement.afficher());
+
                 CompareGeneric<Hote> compareGenericHote = new CompareGeneric<>(hoteList.get(0), hoteList.get(1));
 //                compareGenericHote.getLower().afficher();
 //                compareGenericHote.getHigher().afficher();
@@ -106,7 +111,7 @@ public class Menu {
                 Optional<Logement> monLogement = findLogementByNameWithGenericity(GestionLogements.getLogementList(), "Bardu");
                 // if(monLogement.isPresent()) monLogement.get().afficher();
 
-                 GestionSejour.getSejourList().get(0).setLogement(null);
+                listerMenu();
                 break;
             case 6:
                 // not needed here but good to know
@@ -117,18 +122,10 @@ public class Menu {
     }
 
     static void init() throws ParseException {
-        hoteList = new ArrayList<>();
-        voyageurList = new ArrayList<>();
+        AirBnBData airBnBData = AirBnBData.getInstance();
 
-        initFromXml();
-//        hoteList.add(new Hote("titi", "rodriguez", 54, 234));
-//        hoteList.add(new Hote("Son", "Goku", 54, 1));
-//        Logement logement1 = new Maison(hoteList.get(0), 50, "32 rue de la raclette", 120, 12, 0, false);
-//        Logement logement2 = new Appartement(hoteList.get(0), 31, "33 rue de la fondu", 42, 5, 1, 4);
-
-        voyageurList.add(new Voyageur("Helmut", "Shmit", 33));
-        voyageurList.add(new Voyageur("Ken", "Hokuto No", 54));
-
+        hoteList = airBnBData.getHotes();
+        voyageurList = airBnBData.getVoyageurs();
 
         Sejour sejour1 = new SejourCourt(new MaDate("25/02/2021"), 5, hoteList.get(0).getLogementList().get(0), 2);
         Sejour sejour2 = new SejourLong(new MaDate("6/03/2021"), 12, hoteList.get(0).getLogementList().get(1), 1);
@@ -142,78 +139,6 @@ public class Menu {
         } catch (Exception e) {
             Utile.alert(e.getMessage());
         }
-    }
-
-    @XStreamAlias("Logements")
-    public class Logements {
-
-        @XStreamImplicit
-        private List<Appartement> appartementList = new ArrayList<>();
-
-        @XStreamImplicit
-        private List<Maison> maisonList = new ArrayList<>();
-
-        public List<Hote> getHoteList() {
-            List<Logement> logementList = new ArrayList<>();
-            List<Hote> hoteList;
-
-            logementList.addAll(appartementList);
-            logementList.addAll(maisonList);
-
-            // enleve les logements en double - utilise la methode equals
-            Set<Logement> logementSet = new HashSet<>(logementList);
-
-            hoteList = logementSet.stream()
-                    .map(Logement::getHote).distinct() // distinct() utilise la methode equals de Hote
-                    .map(hote -> new Hote(hote))
-                    .map(hote -> {
-                        logementSet.forEach(logement -> {
-                            if (hote.equals(logement.getHote())) {
-                                if (logement instanceof Maison) (new Maison(hote, (Maison) logement)).setName(hote.getNom()+logement.getId());
-                                else if (logement instanceof Appartement) (new Appartement(hote, (Appartement) logement)).setName(hote.getNom()+logement.getId());
-                            }
-                        });
-
-                        return hote;
-                    })
-                    .collect(Collectors.toList());
-
-            return hoteList;
-        }
-    }
-
-    static void initFromXml() {
-        XStream xstream = new XStream();
-        //Clear out all permissions
-        xstream.addPermission(NoTypePermission.NONE);
-        //Add permission to deserialize the Logements class
-        xstream.allowTypes(new Class[]{Appartement.class, Logements.class, Maison.class, Hote.class});
-        xstream.processAnnotations(Logements.class);
-
-        String xmlString;
-
-        try {
-            xmlString = fileToString("docs/logements.xml");
-            xstream.alias("Appartement", Appartement.class);
-            xstream.alias("Maison", Maison.class);
-            xstream.alias("hote", Hote.class);
-            Logements logements = (Logements) xstream.fromXML(xmlString);
-
-            hoteList = logements.getHoteList();
-
-        } catch (IOException e){
-            Utile.alert("Impossible de lire le fichier "+e.getMessage());
-        } catch (Exception e) {
-            Utile.alert("Erreur de parsing "+e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private static String fileToString(String filePath) throws IOException {
-        String content = "";
-        content = new String ( Files.readAllBytes( Paths.get(filePath) ) );
-
-        return content;
     }
 
     static void afficherPersonneList(List<? extends Personne> pList) {

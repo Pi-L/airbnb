@@ -46,6 +46,14 @@ public class Maison extends Logement{
         System.out.println(ConsoleColors.PURPLE_BOLD+"Piscine : "+ConsoleColors.RESET+(possedePiscine ? "Oui" : "Non"));
     }
 
+    public boolean isPossedePiscine() {
+        return possedePiscine;
+    }
+
+    public int getSuperficieJardin() {
+        return superficieJardin;
+    }
+
     @Override
     public int getSuperficieTotale() {
         return getSuperficie() + superficieJardin;
