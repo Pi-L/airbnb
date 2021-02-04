@@ -74,8 +74,12 @@ public class Menu {
                 GestionReservations.listerReservations();
                 break;
             case 5:
-
-                Search search = new Search.SearchBuilder(2).possedeBalcon(false).possedeJardin(false).build();
+                Search search = new Search.SearchBuilder(2)
+                        .possedeBalcon(false)
+                        .possedeJardin(false)
+                        .tarifMaxParNuit(71)
+                        .tarifMinParNuit(69)
+                        .build();
 
                 List<Logement> logementsFound = search.result();
 
