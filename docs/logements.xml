@@ -42,7 +42,7 @@
 		<superficie>120</superficie>
 		<nbVoyageursMax>4</nbVoyageursMax>
 		<numeroEtage>1</numeroEtage>
-		<superficieBalcon>0</superficieBalcon>
+		<superficieBalcon>1</superficieBalcon>
 	</Appartement>
 	
 	<Appartement>

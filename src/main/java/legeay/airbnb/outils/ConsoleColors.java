@@ -7,7 +7,10 @@ package legeay.airbnb.outils;
  * <p>Color Constants characters for Posix terminals</p>
  * <strong>May not work on Windows Systems</strong>
  */
-public class ConsoleColors {
+public final class ConsoleColors {
+
+    private ConsoleColors() {}
+
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset
 

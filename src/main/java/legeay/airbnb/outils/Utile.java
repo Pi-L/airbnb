@@ -1,7 +1,9 @@
 package legeay.airbnb.outils;
 
 
-public class Utile {
+public final class Utile {
+
+    private Utile() {}
 
     public static void alert (String message) {
         System.out.println(ConsoleColors.RED_BACKGROUND+ConsoleColors.WHITE_BOLD_BRIGHT+message+ConsoleColors.RESET);

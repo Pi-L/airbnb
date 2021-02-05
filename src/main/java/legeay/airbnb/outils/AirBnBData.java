@@ -22,8 +22,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class AirBnBData {
-
+    // ici permet d'instancier avant même d'avoir appeler getInstance() ... quoi que
     private static volatile AirBnBData instance = new AirBnBData();
+
     private List<Hote> hotes = new ArrayList<>();
     private List<Voyageur> voyageurs = new ArrayList<>();
     private List<Logement> logements = new ArrayList<>();
@@ -93,7 +94,7 @@ public class AirBnBData {
     }
 
     @XStreamAlias("Logements")
-    private static class Logements {
+    private class Logements {
 
         @XStreamImplicit
         private List<Appartement> appartementList = new ArrayList<>();

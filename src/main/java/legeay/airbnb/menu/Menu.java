@@ -75,15 +75,17 @@ public class Menu {
                 break;
             case 5:
                 Search search = new Search.SearchBuilder(2)
-                        .possedeBalcon(false)
+                        .possedeBalcon(true)
                         .possedeJardin(false)
+                        .tarifMinParNuit(49)
                         .tarifMaxParNuit(71)
-                        .tarifMinParNuit(69)
                         .build();
 
                 List<Logement> logementsFound = search.result();
 
-                logementsFound.forEach(logement -> logement.afficher());
+                logementsFound.forEach(Logement::afficher);
+
+
 
                 CompareGeneric<Hote> compareGenericHote = new CompareGeneric<>(hoteList.get(0), hoteList.get(1));
 //                compareGenericHote.getLower().afficher();
