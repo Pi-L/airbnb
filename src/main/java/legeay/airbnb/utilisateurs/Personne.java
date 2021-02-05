@@ -2,10 +2,8 @@ package legeay.airbnb.utilisateurs;
 
 import legeay.airbnb.AffichableInterface;
 import legeay.airbnb.Comparaison;
-import legeay.airbnb.logements.Logement;
 import legeay.airbnb.outils.ConsoleColors;
-
-import java.util.Comparator;
+import legeay.airbnb.outils.Utile;
 import java.util.Objects;
 
 public abstract class Personne implements AffichableInterface, Comparable<Personne>, Comparaison {
@@ -14,7 +12,7 @@ public abstract class Personne implements AffichableInterface, Comparable<Person
     private final String nom;
     private final int age;
 
-    public Personne(String prenom, String nom, int age) {
+    protected Personne(String prenom, String nom, int age) {
         super();
 
         this.prenom = prenom;
@@ -23,12 +21,11 @@ public abstract class Personne implements AffichableInterface, Comparable<Person
     }
 
     public void afficher() {
-        System.out.print(ConsoleColors.RED+prenom+" "+nom+ConsoleColors.RESET+" ("+age+" ans)");
+        Utile.logger.info(ConsoleColors.RED+prenom+" "+nom+ConsoleColors.RESET+" ("+age+" ans)");
     }
 
     public int getId() {
-        int myId = this.id;
-        return myId;
+        return this.id;
     }
 
     public String getPrenom() {

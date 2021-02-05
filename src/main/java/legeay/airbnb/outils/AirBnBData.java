@@ -7,11 +7,8 @@ import com.thoughtworks.xstream.security.NoTypePermission;
 import legeay.airbnb.logements.Appartement;
 import legeay.airbnb.logements.Logement;
 import legeay.airbnb.logements.Maison;
-import legeay.airbnb.menu.GestionLogements;
-import legeay.airbnb.menu.Menu;
 import legeay.airbnb.utilisateurs.Hote;
 import legeay.airbnb.utilisateurs.Voyageur;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -23,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class AirBnBData {
     // ici permet d'instancier avant même d'avoir appeler getInstance() ... quoi que
-    private static volatile AirBnBData instance = new AirBnBData();
+    private static final AirBnBData instance = new AirBnBData();
 
     private List<Hote> hotes = new ArrayList<>();
     private List<Voyageur> voyageurs = new ArrayList<>();
@@ -56,9 +53,9 @@ public class AirBnBData {
             xstream.alias("Appartement", Appartement.class);
             xstream.alias("Maison", Maison.class);
             xstream.alias("hote", Hote.class);
-            Logements logements = (Logements) xstream.fromXML(xmlString);
+            Logements logementList = (Logements) xstream.fromXML(xmlString);
 
-            hotes = logements.getHoteList();
+            hotes = logementList.getHoteList();
 
         } catch (IOException e){
             Utile.alert("Impossible de lire le fichier "+e.getMessage());
@@ -114,7 +111,7 @@ public class AirBnBData {
 
             hoteList = logementSet.stream()
                     .map(Logement::getHote).distinct() // distinct() utilise la methode equals de Hote
-                    .map(hote -> new Hote(hote))
+                    .map(Hote::new)
                     .map(hote -> {
                         logementSet.forEach(logement -> {
                             if (hote.equals(logement.getHote())) {

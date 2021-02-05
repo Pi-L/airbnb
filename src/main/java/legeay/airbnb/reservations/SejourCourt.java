@@ -1,9 +1,8 @@
 package legeay.airbnb.reservations;
 
 import legeay.airbnb.logements.Logement;
-import legeay.airbnb.outils.MaDate;
+import legeay.airbnb.outils.Utile;
 
-import java.text.ParseException;
 import java.util.Date;
 
 public class SejourCourt extends Sejour implements ConditionsTarifairesInterface{
@@ -33,7 +32,7 @@ public class SejourCourt extends Sejour implements ConditionsTarifairesInterface
     @Override
     public void afficher()  {
         super.afficher();
-        System.out.println("Le prix de ce séjour est de "+getTarif()+"€.");
+        Utile.logger.info("Le prix de ce séjour est de "+getTarif()+"€.");
     }
 
     @Override

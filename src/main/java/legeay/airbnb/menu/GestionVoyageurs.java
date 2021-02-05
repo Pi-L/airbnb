@@ -1,20 +1,24 @@
 package legeay.airbnb.menu;
 
+import legeay.airbnb.outils.Constants;
 import legeay.airbnb.outils.Utile;
 import legeay.airbnb.utilisateurs.Voyageur;
 
 public class GestionVoyageurs {
+
+    private GestionVoyageurs() {}
+
     static void listerVoyageurs() {
-        System.out.println();
-        Utile.info("-------------------------------------");
+        Utile.logger.info("");
+        Utile.info(Constants.LINE_SEPARATOR);
         Utile.info("Liste des voyageurs ");
-        Utile.info("---------------");
+        Utile.info(Constants.SMALL_LINE_SEPARATOR);
         Menu.afficherPersonneList(Menu.voyageurList);
-        Utile.info("-------------------------------------");
+        Utile.info(Constants.LINE_SEPARATOR);
         Utile.info("Saisir une option : ");
-        System.out.println("1 : Ajouter un voyageur");
-        System.out.println("2 : Supprimer un voyageur");
-        System.out.println("3 : Retour");
+        Utile.logger.info("1 : Ajouter un voyageur");
+        Utile.logger.info("2 : Supprimer un voyageur");
+        Utile.logger.info("3 : Retour");
 
         switch (Menu.getInputInteger(1,3)) {
             case 1:
@@ -22,7 +26,7 @@ public class GestionVoyageurs {
                 listerVoyageurs();
                 break;
             case 2:
-                if(Menu.voyageurList.size() == 0) Utile.alert("Il n'y a pas d'Voyageur à supprimer !");
+                if(Menu.voyageurList.isEmpty()) Utile.alert("Il n'y a pas d'Voyageur à supprimer !");
                 else {
                     supprimerVoyageur();
                 }
@@ -35,26 +39,26 @@ public class GestionVoyageurs {
     }
 
     static void ajouterVoyageur() {
-        Utile.info("-------------------------------------");
+        Utile.info(Constants.LINE_SEPARATOR);
         Utile.info("Ajouter un voyageur");
-        System.out.println("Nom :");
+        Utile.logger.info("Nom :");
         String nom = Menu.getInputString();
 
-        System.out.println("Prenom :");
+        Utile.logger.info("Prenom :");
         String prenom = Menu.getInputString();
 
-        System.out.println("Age :");
+        Utile.logger.info("Age :");
         int age = Menu.getInputInteger(0, 150);
 
-        Voyageur Voyageur = new Voyageur(prenom, nom, age);
+        Voyageur voyageur = new Voyageur(prenom, nom, age);
 
-        Menu.voyageurList.add(Voyageur);
+        Menu.voyageurList.add(voyageur);
     }
 
     static void supprimerVoyageur() {
-        Utile.info("-------------------------------------");
+        Utile.info(Constants.LINE_SEPARATOR);
         Utile.info("Supprimer un voyageur");
-        System.out.println("Choisir un Voyageur à supprimer :");
+        Utile.logger.info("Choisir un Voyageur à supprimer :");
 
         int indexPlusOne = Menu.getInputInteger(1, Menu.voyageurList.size());
         Menu.voyageurList.remove(indexPlusOne - 1);

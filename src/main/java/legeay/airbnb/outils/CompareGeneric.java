@@ -1,7 +1,6 @@
 package legeay.airbnb.outils;
 
 import legeay.airbnb.Comparaison;
-import legeay.airbnb.utilisateurs.Hote;
 
 public class CompareGeneric <T extends Comparaison> {
 

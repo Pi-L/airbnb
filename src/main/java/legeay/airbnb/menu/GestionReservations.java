@@ -1,7 +1,6 @@
 package legeay.airbnb.menu;
 
-import legeay.airbnb.logements.Logement;
-import legeay.airbnb.outils.MaDate;
+import legeay.airbnb.outils.Constants;
 import legeay.airbnb.outils.Utile;
 import legeay.airbnb.reservations.Reservation;
 import legeay.airbnb.reservations.Sejour;
@@ -9,7 +8,6 @@ import legeay.airbnb.utilisateurs.Voyageur;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,25 +15,25 @@ public class GestionReservations {
 
     static void listerReservations() {
 
-        System.out.println();
-        Utile.info("-------------------------------------");
+        Utile.logger.info("");
+        Utile.info(Constants.LINE_SEPARATOR);
         Utile.info("Liste des reservations ");
-        Utile.info("---------------");
+        Utile.info(Constants.SMALL_LINE_SEPARATOR);
         afficherReservationList();
-        Utile.info("-------------------------------------");
+        Utile.info(Constants.LINE_SEPARATOR);
         Utile.info("Saisir une option : ");
-        System.out.println("1 : Ajouter un reservation");
-        System.out.println("2 : Supprimer un reservation");
-        System.out.println("3 : Retour");
+        Utile.logger.info("1 : Ajouter un reservation");
+        Utile.logger.info("2 : Supprimer un reservation");
+        Utile.logger.info("3 : Retour");
 
         switch (Menu.getInputInteger(1,3)) {
             case 1:
-                if (GestionLogements.getLogementList().size() == 0){
+                if (GestionLogements.getLogementList().isEmpty()){
                     Utile.alert("Vous ne pouvez continuer car il n'y a pas de logements enregistrés !");
                     Utile.warn("Retour menu principal...");
                     Menu.listerMenu();
                     break;
-                } else if(Menu.voyageurList.size() == 0) {
+                } else if(Menu.voyageurList.isEmpty()) {
                     Utile.alert("Vous ne pouvez continuer car il n'y a pas de voyageurs enregistrés !");
                     Utile.warn("Retour menu principal...");
                     Menu.listerMenu();
@@ -51,7 +49,7 @@ public class GestionReservations {
                 }
                 break;
             case 2:
-                if(getReservationList().size() == 0) Utile.alert("Il n'y a pas de reservation à supprimer !");
+                if(getReservationList().isEmpty()) Utile.alert("Il n'y a pas de reservation à supprimer !");
                 else supprimerReservation();
 
                 listerReservations();
@@ -71,11 +69,11 @@ public class GestionReservations {
     static void afficherReservationList() {
         List<Reservation> reservationList = getReservationList();
 
-        if(reservationList.size() == 0) Utile.warn("Il n'y a pas de reservation à afficher");
+        if(reservationList.isEmpty()) Utile.warn("Il n'y a pas de reservation à afficher");
         else {
             for (int i = 0; i < reservationList.size(); i++) {
-                if (i>0) System.out.println();
-                System.out.print((i + 1) + ". ");
+                if (i>0) Utile.logger.info("");
+                Utile.logger.info((i + 1) + ". ");
                 reservationList.get(i).afficher();
             }
         }
@@ -85,12 +83,12 @@ public class GestionReservations {
      *
      * @throws Exception thrown if validity conditions aren't met
      */
-    static void ajouterReservation() throws Exception {
-        Utile.info("-------------------------------------");
+    static void ajouterReservation() {
+        Utile.info(Constants.LINE_SEPARATOR);
         Utile.info("Ajouter un reservation");
         Utile.info("Liste des voyageurs ");
         Menu.afficherPersonneList(Menu.voyageurList);
-        System.out.println("Numéro du voyageur : ");
+        Utile.logger.info("Numéro du voyageur : ");
         int indexVoyageur = Menu.getInputInteger(1, Menu.voyageurList.size()) - 1;
         Voyageur currentVoyageur = Menu.voyageurList.get(indexVoyageur);
 
@@ -107,12 +105,12 @@ public class GestionReservations {
                 Utile.alert(" Mauvais format de la date d'arrivée. Le sejour n'a pas été enregistré ");
             }
 
-            System.out.println("Souhaitez vous ajouter un autre sejour ? (0: non, 1: oui) : ");
+            Utile.logger.info("Souhaitez vous ajouter un autre sejour ? (0: non, 1: oui) : ");
             isFinishedAddingSejour = Menu.getInputInteger(0, 1) == 0;
 
         } while (!isFinishedAddingSejour);
 
-        if (currentSejourList.size() == 0) {
+        if (currentSejourList.isEmpty()) {
             Utile.alert(" Vous n'avez ajouter aucun séjour, aucun réservation n'a été crée ! ");
 
         }else {
@@ -124,9 +122,9 @@ public class GestionReservations {
     static void supprimerReservation() {
         List<Reservation> reservationList = getReservationList();
 
-        Utile.info("-------------------------------------");
+        Utile.info(Constants.LINE_SEPARATOR);
         Utile.info("Supprimer un reservation");
-        System.out.println("Choisir un reservation à supprimer :");
+        Utile.logger.info("Choisir un reservation à supprimer :");
 
         int index = Menu.getInputInteger(1, reservationList.size()) - 1;
 

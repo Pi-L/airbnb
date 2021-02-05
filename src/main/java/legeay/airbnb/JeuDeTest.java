@@ -59,8 +59,8 @@ public class JeuDeTest {
                 dateArrivee = new MaDate(stringDate);
             }
             catch (ParseException e) {
-                System.out.println("La Date << "+ stringDate +" >> n'est pas au bon format. L'application ne peut continuer");
-                System.out.println(e.getMessage());
+                Utile.logger.info("La Date << "+ stringDate +" >> n'est pas au bon format. L'application ne peut continuer");
+                Utile.logger.info(e.getMessage());
                 System.exit(0);
             }
 

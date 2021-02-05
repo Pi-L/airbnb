@@ -49,9 +49,9 @@ public class Appartement extends Logement implements AffichableInterface {
     @Override
     public void afficher() {
         getHote().afficher();
-        System.out.println("Le logement est un appartement situé "+ConsoleColors.BLACK_BACKGROUND_BRIGHT+getAdresse()+" au "+etageToString()+ConsoleColors.RESET);
-        System.out.println(ConsoleColors.PURPLE_BOLD+"Superficie : "+ConsoleColors.RESET+getSuperficie()+"m2");
-        System.out.println(ConsoleColors.PURPLE_BOLD+"Balcon : "+ConsoleColors.RESET+(superficieBalcon>0 ? "Oui ("+superficieBalcon+"m2)" : "Non"));
+        Utile.logger.info("Le logement est un appartement situé "+ConsoleColors.BLACK_BACKGROUND_BRIGHT+getAdresse()+" au "+etageToString()+ConsoleColors.RESET);
+        Utile.logger.info(ConsoleColors.PURPLE_BOLD+"Superficie : "+ConsoleColors.RESET+getSuperficie()+"m2");
+        Utile.logger.info(ConsoleColors.PURPLE_BOLD+"Balcon : "+ConsoleColors.RESET+(superficieBalcon>0 ? "Oui ("+superficieBalcon+"m2)" : "Non"));
     }
 
     /**

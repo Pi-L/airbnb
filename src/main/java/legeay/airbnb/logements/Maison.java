@@ -40,10 +40,10 @@ public class Maison extends Logement{
     @Override
     public void afficher() {
         getHote().afficher();
-        System.out.println("Le logement est une maison située "+ConsoleColors.BLACK_BACKGROUND_BRIGHT+getAdresse()+ConsoleColors.RESET);
-        System.out.println(ConsoleColors.PURPLE_BOLD+"Superficie : "+ConsoleColors.RESET+getSuperficie()+"m2");
-        System.out.println(ConsoleColors.PURPLE_BOLD+"Jardin : "+ConsoleColors.RESET+(superficieJardin>0 ? "Oui ("+superficieJardin+"m2)" : "Non"));
-        System.out.println(ConsoleColors.PURPLE_BOLD+"Piscine : "+ConsoleColors.RESET+(possedePiscine ? "Oui" : "Non"));
+        Utile.logger.info("Le logement est une maison située "+ConsoleColors.BLACK_BACKGROUND_BRIGHT+getAdresse()+ConsoleColors.RESET);
+        Utile.logger.info(ConsoleColors.PURPLE_BOLD+"Superficie : "+ConsoleColors.RESET+getSuperficie()+"m2");
+        Utile.logger.info(ConsoleColors.PURPLE_BOLD+"Jardin : "+ConsoleColors.RESET+(superficieJardin>0 ? "Oui ("+superficieJardin+"m2)" : "Non"));
+        Utile.logger.info(ConsoleColors.PURPLE_BOLD+"Piscine : "+ConsoleColors.RESET+(possedePiscine ? "Oui" : "Non"));
     }
 
     public boolean isPossedePiscine() {

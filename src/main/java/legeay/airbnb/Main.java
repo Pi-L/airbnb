@@ -1,21 +1,7 @@
 package legeay.airbnb;
 
-import legeay.airbnb.logements.Appartement;
-import legeay.airbnb.logements.Logement;
-import legeay.airbnb.logements.Maison;
-import legeay.airbnb.outils.MaDate;
-import legeay.airbnb.outils.Utile;
-import legeay.airbnb.reservations.Reservation;
-import legeay.airbnb.reservations.Sejour;
-import legeay.airbnb.reservations.SejourCourt;
-import legeay.airbnb.reservations.SejourLong;
-import legeay.airbnb.utilisateurs.Hote;
-import legeay.airbnb.utilisateurs.Personne;
-import legeay.airbnb.utilisateurs.Voyageur;
-
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class Main {
     public static void main(String[] args) throws ParseException {

@@ -5,7 +5,6 @@ import legeay.airbnb.logements.Logement;
 import legeay.airbnb.outils.Utile;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,7 +30,7 @@ public class Hote extends Personne {
         String messageStart = " qui s'engage à répondre dans ";
         String messageEnd = delaiDeReponse > 1 ? "les "+delaiDeReponse+" heures" : "l'heure";
         super.afficher();
-        System.out.println(messageStart+messageEnd);
+        Utile.logger.info(messageStart+messageEnd);
 
     }
 

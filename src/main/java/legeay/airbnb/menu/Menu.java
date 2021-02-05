@@ -1,10 +1,5 @@
 package legeay.airbnb.menu;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
-import com.thoughtworks.xstream.security.NoTypePermission;
-import legeay.airbnb.AffichableInterface;
 import legeay.airbnb.CompareGenericList;
 import legeay.airbnb.logements.Appartement;
 import legeay.airbnb.logements.Logement;
@@ -17,14 +12,10 @@ import legeay.airbnb.reservations.SejourLong;
 import legeay.airbnb.utilisateurs.Hote;
 import legeay.airbnb.utilisateurs.Personne;
 import legeay.airbnb.utilisateurs.Voyageur;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class Menu {
@@ -42,7 +33,7 @@ public class Menu {
             Utile.alert("Erreur dans le format de la date d'un sejour");
         }
 
-        Utile.info("-----------------------------");
+        Utile.info(Constants.LINE_SEPARATOR);
         Utile.info("--- Bienvenue chez AirBnB ---");
         listerMenu();
 
@@ -51,15 +42,15 @@ public class Menu {
 
     static void listerMenu() {
 
-        Utile.info("-----------------------------");
+        Utile.info(Constants.LINE_SEPARATOR);
         Utile.info("- Choisir une option : ");
-        System.out.println("1 : Liste des hôtes");
-        System.out.println("2 : Liste des logements");
-        System.out.println("3 : Liste des voyageurs");
-        System.out.println("4 : Liste des réservations");
-        System.out.println("5 : Trouver logement par nom");
-        System.out.println("6 : Fermer le programme");
-        Utile.info("-----------------------------");
+        Utile.logger.info("1 : Liste des hôtes");
+        Utile.logger.info("2 : Liste des logements");
+        Utile.logger.info("3 : Liste des voyageurs");
+        Utile.logger.info("4 : Liste des réservations");
+        Utile.logger.info("5 : Trouver logement par nom");
+        Utile.logger.info("6 : Fermer le programme");
+        Utile.info(Constants.LINE_SEPARATOR);
         switch (Menu.getInputInteger(1,6)) {
             case 1:
                 GestionHotes.listerHotes();
@@ -83,15 +74,60 @@ public class Menu {
 
                 List<Logement> logementsFound = search.result();
 
-                logementsFound.forEach(Logement::afficher);
+                // logementsFound.forEach(Logement::afficher);
+
+                ArrayList<String> maList = new ArrayList<>(Arrays.asList(
+                        "aaaaaaaaaa",
+                        "bbbbbbbbb",
+                        "cccccccc",
+                        "ddddddd",
+                        "eeeeee",
+                        "fffff",
+                        "gggg",
+                        "hhh"
+                ));
+
+                String maString = maList.stream().reduce("Les noms : \n", (acc, x) -> acc +" -> "+ x);
+                Utile.warn(maString);
+                Utile.info("HashCode : "+ maList.hashCode());
+                maList.stream().skip(2).limit(3).forEach(Utile::alert);
+                maList.stream().dropWhile(new Predicate<String>() {
+                    @Override
+                    public boolean test(String s) {
+                        return s.length() >= 5;
+                    }
+                }).forEach(Utile::info);
+                maList.stream().filter(s -> s.length() % 2 == 0 ).forEach(Utile::info);
+
+                try {
+                    Hote monHote = hoteList.stream()
+                            .flatMap(hote -> hote.getLogementList().stream())
+                            .skip(2)
+                            .limit(2)
+                            .map(logement -> logement.getHote())
+                            .distinct()
+                            .filter(hote -> hote.getAge() > 72)
+                            .findFirst()
+                            .orElseThrow(new Supplier<Throwable>() {
+                                @Override
+                                public Throwable get() {
+                                    return new NoSuchElementException("Element non trouvé");
+                                }
+                            });
+
+                    Utile.fonkie(Constants.LINE_SEPARATOR);
+                    monHote.afficher();
+                    Utile.fonkie(Constants.LINE_SEPARATOR);
+                } catch (Throwable throwable) {
+                    Utile.alert("ERROR : "+ throwable.getMessage());
+                }
 
 
-
-                CompareGeneric<Hote> compareGenericHote = new CompareGeneric<>(hoteList.get(0), hoteList.get(1));
+                //              CompareGeneric<Hote> compareGenericHote = new CompareGeneric<>(hoteList.get(0), hoteList.get(1));
 //                compareGenericHote.getLower().afficher();
 //                compareGenericHote.getHigher().afficher();
 
-                CompareGenericList<Hote> compareGenericList = new CompareGenericList(hoteList);
+                CompareGenericList<Hote> compareGenericList = new CompareGenericList<Hote>(hoteList);
                 Optional<Hote> myHoteHigher = compareGenericList.getHigher();
                 Optional<Hote> myHoteLower = compareGenericList.getLower();
 
@@ -124,6 +160,8 @@ public class Menu {
                 // 0 means normal exit
                 // System.exit(0);
                 break;
+            default:
+                break;
         }
     }
 
@@ -141,21 +179,21 @@ public class Menu {
         resa1SejourList.add(sejour2);
 
         try {
-            Reservation reservation1 = new Reservation(resa1SejourList, voyageurList.get(1));
+            new Reservation(resa1SejourList, voyageurList.get(1));
         } catch (Exception e) {
             Utile.alert(e.getMessage());
         }
     }
 
     static void afficherPersonneList(List<? extends Personne> pList) {
-        if(pList.size() == 0) Utile.warn("Il n'y a pas d'éléments à afficher");
+        if(pList.isEmpty()) Utile.warn("Il n'y a pas d'éléments à afficher");
         else {
-            // System.out.println("Liste des "+pList.get(0).getClass().getSimpleName()+"s :");
+            // Utile.logger.info("Liste des "+pList.get(0).getClass().getSimpleName()+"s :");
             for (int i = 0; i < pList.size(); i++) {
-                System.out.print((i+1)+". ");
+                Utile.logger.info((i+1)+". ");
                 pList.get(i).afficher();
 
-                if(pList.get(i).getClass().getSimpleName().equals("Voyageur")) System.out.println();
+                if(pList.get(i) instanceof Voyageur) Utile.logger.info("");
             }
         }
     }
@@ -172,7 +210,7 @@ public class Menu {
 
             } catch (Exception exception) {
                 Utile.alert(" Votre saisie << " + scanner.nextLine() + " >> n'est pas un entier. ");
-                System.out.println("Veuillez (vous) ressaisir : ");
+                Utile.logger.info("Veuillez (vous) ressaisir : ");
                 isValid = false;
             }
         }
@@ -186,7 +224,7 @@ public class Menu {
 
         while (value < min || value > max) {
             Utile.alert(" La valeur entrée n'est pas dans l'interval demandé : ["+min+" - "+max+"] ");
-            System.out.println("Veuillez (vous) ressaisir : ");
+            Utile.logger.info("Veuillez (vous) ressaisir : ");
             value = getInputInteger();
         }
         return value;
@@ -221,12 +259,10 @@ public class Menu {
     }
 
     static <T extends Logement> Optional<T> findLogementByNameWithGenericity(List<T> logementList, String name) {
-        Optional<T> logementOptional = Optional.empty();
-
         for (T logement : logementList) {
-            if(logement.getName().contains(name)) return logementOptional;
+            if(logement.getName().contains(name)) return Optional.of(logement);
         }
 
-        return logementOptional;
+        return Optional.empty();
     }
 }

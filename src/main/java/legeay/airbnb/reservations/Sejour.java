@@ -21,7 +21,7 @@ public abstract class Sejour implements SejourInterface, AffichableInterface, Cl
 
     private int tarif;
 
-    public Sejour(Date dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) {
+    protected Sejour(Date dateArrivee, int nbNuits, Logement logement, int nbVoyageurs) {
         this.dateArrivee = dateArrivee;
         this.nbNuits = nbNuits;
         this.logement = logement;
@@ -52,7 +52,7 @@ public abstract class Sejour implements SejourInterface, AffichableInterface, Cl
     public void afficher() {
         logement.afficher();
         Utile.warn("Sejour pour la reservation : "+(reservation != null ? "n°"+reservation.getId(): "reservation non créée"));
-        System.out.println("Séjour du "+dateArrivee.toString()+" au "+getDateDepart().toString()+" ("+nbNuits+" nuit"+(nbNuits>1?"s":"")+").");
+        Utile.logger.info("Séjour du "+dateArrivee.toString()+" au "+getDateDepart().toString()+" ("+nbNuits+" nuit"+(nbNuits>1?"s":"")+").");
     }
 
     public boolean isValid() {
@@ -82,9 +82,7 @@ public abstract class Sejour implements SejourInterface, AffichableInterface, Cl
     public Reservation getReservation() { return  reservation; }
 
     // needed to be here instead of ConditionsTarifairesInterface because it is used in Reservation
-    public int getTarif() {
-        return tarif;
-    };
+    public int getTarif() { return tarif; }
 
     public void setDateArrivee(Date dateArrivee) {
         this.dateArrivee = new MaDate(dateArrivee);
@@ -99,21 +97,19 @@ public abstract class Sejour implements SejourInterface, AffichableInterface, Cl
     }
 
     // pas besoin de faire un new ou clone car logement est immuable
-    public void setLogement(Logement logement) throws IllegalArgumentException {
+    public void setLogement(Logement logement) {
         if(logement == null || logement.getNbVoyageursMax() < nbVoyageurs) throw new IllegalArgumentException("arg invalide pour setLogement");
 
         this.logement = logement;
         miseAJourDuTarif();
     }
 
-    public void setNbVoyageurs(int nbVoyageurs) throws IllegalArgumentException {
+    public void setNbVoyageurs(int nbVoyageurs) {
         if(nbVoyageurs == 0 || logement.getNbVoyageursMax() < nbVoyageurs) throw new IllegalArgumentException("arg invalide pour setNbVoyageurs");
         this.nbVoyageurs = nbVoyageurs;
     }
 
-    protected void setTarif(int pTarif) {
-        tarif = pTarif;
-    };
+    protected void setTarif(int pTarif) { tarif = pTarif; }
 
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
@@ -126,7 +122,7 @@ public abstract class Sejour implements SejourInterface, AffichableInterface, Cl
             sejour = (Sejour) super.clone();
         } catch(CloneNotSupportedException cnse) {
             // Ne devrait jamais arriver car nous implémentons l'interface Cloneable
-            cnse.printStackTrace(System.err);
+            Utile.alert(cnse.getMessage());
         }
 
         return sejour;

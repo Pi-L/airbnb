@@ -1,18 +1,17 @@
 package legeay.airbnb.logements;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import legeay.airbnb.Comparaison;
-import legeay.airbnb.outils.Utile;
 import legeay.airbnb.reservations.Sejour;
 import legeay.airbnb.utilisateurs.Hote;
-
 import java.util.*;
+
 
 /**
  * immutable
  */
 public abstract class Logement implements Comparable<Logement>, Comparaison {
+
     private static int index = 0;
     private final int id;
 
@@ -36,7 +35,7 @@ public abstract class Logement implements Comparable<Logement>, Comparaison {
      * @param superficie
      * @param nbVoyageursMax
      */
-    public Logement(Hote hote, int tarifJournalier, String adresse, int superficie, int nbVoyageursMax) {
+    protected Logement(Hote hote, int tarifJournalier, String adresse, int superficie, int nbVoyageursMax) {
         super();
 
         this.hote = hote;
